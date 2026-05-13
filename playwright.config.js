@@ -29,7 +29,6 @@ export default defineConfig({
   globalSetup: "./global.setup.js",
 
   use: {
-    headless: false,
 
     trace: "on",
 
