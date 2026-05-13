@@ -39,5 +39,11 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
+      - name: Create Gmail Auth Files
+        run: |
+          mkdir -p auth
+          echo '${{ secrets.GOOGLE_CREDENTIALS }}' > auth/credentials.json
+          echo '${{ secrets.GOOGLE_TOKEN }}' > auth/token.json
+
       - name: Run Playwright tests
         run: npx playwright test
