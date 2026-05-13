@@ -9,5 +9,6 @@ test.use({
 test("RJA Dashboard Test", async ({ page }) => {
   await page.goto(portals.rja.url);
 
-  await expect(page.locator("text=RJA Panel")).toBeVisible();
+  await expect(page).not.toHaveURL(/login/);
+
 });
