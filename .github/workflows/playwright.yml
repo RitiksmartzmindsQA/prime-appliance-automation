@@ -1,27 +1,43 @@
 name: Playwright Tests
+
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
+
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
+
 jobs:
   test:
-    timeout-minutes: 60
     runs-on: ubuntu-latest
+
+    env:
+      COMMON_EMAIL: ${{ secrets.COMMON_EMAIL }}
+
+      RJA_URL: ${{ secrets.RJA_URL }}
+      COMPLIANCE_URL: ${{ secrets.COMPLIANCE_URL }}
+      IVD_URL: ${{ secrets.IVD_URL }}
+      SA_URL: ${{ secrets.SA_URL }}
+      SAP_URL: ${{ secrets.SAP_URL }}
+      PRICING_URL: ${{ secrets.PRICING_URL }}
+      PTP_URL: ${{ secrets.PTP_URL }}
+      B2B_URL: ${{ secrets.B2B_URL }}
+      B2C_URL: ${{ secrets.B2C_URL }}
+      SOI_URL: ${{ secrets.SOI_URL }}
+      PAP_URL: ${{ secrets.PAP_URL }}
+
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: npx playwright test

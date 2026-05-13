@@ -1,30 +1,25 @@
 export class LoginPage {
+  constructor(page) {
+    this.page = page;
 
-    constructor(page) {
+    this.emailInput = page.locator("input[type=email]");
 
-        this.page = page;
+    this.submitButton = page.locator("button[type=submit]");
 
-        this.emailInput = page.locator('input[type=email]');
+    this.otpInput = page.locator("input[type=number]");
+  }
 
-        this.submitButton = page.locator('button[type=submit]');
+  async enterEmail(email) {
+    await this.emailInput.fill(email);
 
-        this.otpInput = page.locator('input[type=number]');
-    }
+    await this.submitButton.click();
+  }
 
-    async enterEmail(email) {
+  async enterOTP(otp) {
+    await this.otpInput.fill(otp);
+  }
 
-        await this.emailInput.fill(email);
-
-        await this.submitButton.click();
-    }
-
-    async enterOTP(otp) {
-
-        await this.otpInput.fill(otp);
-    }
-
-    async clickVerifyButton() {
-
-        await this.submitButton.click();
-    }
+  async clickVerifyButton() {
+    await this.submitButton.click();
+  }
 }

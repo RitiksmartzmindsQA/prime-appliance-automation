@@ -1,6 +1,6 @@
 // @ts-check
-import { defineConfig, devices } from '@playwright/test';
-import 'dotenv/config';
+import { defineConfig, devices } from "@playwright/test";
+import "dotenv/config";
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -13,7 +13,7 @@ import 'dotenv/config';
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
-  testDir: './tests',
+  testDir: "./tests",
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -23,28 +23,26 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 
-  globalSetup: './global.setup.js',
+  globalSetup: "./global.setup.js",
 
   use: {
-
     headless: false,
 
-    trace: 'on',
+    trace: "on",
 
-    screenshot: 'only-on-failure',
+    screenshot: "only-on-failure",
 
-    video: 'retain-on-failure',
-
+    video: "retain-on-failure",
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
 
     // {
@@ -68,14 +66,14 @@ export default defineConfig({
     // },
 
     /* Test against branded browsers. */
-  //   {
-  //     name: 'Microsoft Edge',
-  //     use: { ...devices['Desktop Edge'], channel: 'msedge' },
-  //   },
-  //   {
-  //     name: 'Google Chrome',
-  //     use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-  //   },
+    //   {
+    //     name: 'Microsoft Edge',
+    //     use: { ...devices['Desktop Edge'], channel: 'msedge' },
+    //   },
+    //   {
+    //     name: 'Google Chrome',
+    //     use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+    //   },
   ],
 
   /* Run your local dev server before starting the tests */
@@ -85,4 +83,3 @@ export default defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
-
