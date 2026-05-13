@@ -6,8 +6,6 @@ test.use({
     storageState: 'auth/rja-auth.json'
 });
 
-// Check if login working 
-
 test('RJA Dashboard Test', async ({ page }) => {
 
     await page.goto(portals.rja.url);
