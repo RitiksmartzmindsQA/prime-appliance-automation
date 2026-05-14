@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+import { waitForPageLoad } from '../../utils/waitHelper.js';
+
 test.use({
   storageState: 'auth/rja-auth.json'
 });
@@ -8,7 +10,7 @@ test('RJA Dashboard Test', async ({ page }) => {
 
   await page.goto(process.env.RJA_URL);
 
-  await page.waitForLoadState('networkidle');
+  await waitForPageLoad(page);
 
   await expect(page).not.toHaveURL(/login/);
 
