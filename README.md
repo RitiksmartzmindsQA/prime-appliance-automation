@@ -6,25 +6,25 @@ This project is a Playwright automation framework built using JavaScript for tes
 
 The framework supports:
 
-* Multi-portal automation
-* Gmail OTP login automation
-* Reusable authentication handling
-* CI execution with GitHub Actions
-* Playwright storage state authentication
-* Environment-based configuration
-* ESLint and Prettier integration
+- Multi-portal automation
+- Gmail OTP login automation
+- Reusable authentication handling
+- CI execution with GitHub Actions
+- Playwright storage state authentication
+- Environment-based configuration
+- ESLint and Prettier integration
 
 ---
 
 # Tech Stack
 
-* Playwright
-* JavaScript (ES Modules)
-* Node.js
-* Gmail API
-* GitHub Actions
-* ESLint
-* Prettier
+- Playwright
+- JavaScript (ES Modules)
+- Node.js
+- Gmail API
+- GitHub Actions
+- ESLint
+- Prettier
 
 ---
 
@@ -66,17 +66,17 @@ The framework supports:
 
 Currently configured portals:
 
-* RJA Portal
-* Compliance Portal
-* IVD Portal
-* SA Portal
-* SAP Portal
-* Pricing Portal
-* PTP Portal
-* B2B Portal
-* B2C Portal
-* SOI Portal
-* PAP Portal
+- RJA Portal
+- Compliance Portal
+- IVD Portal
+- SA Portal
+- SAP Portal
+- Pricing Portal
+- PTP Portal
+- B2B Portal
+- B2C Portal
+- SOI Portal
+- PAP Portal
 
 ---
 
@@ -84,9 +84,9 @@ Currently configured portals:
 
 The framework uses:
 
-* Gmail OTP verification
-* Automated OTP fetching using Gmail API
-* Playwright storage state authentication
+- Gmail OTP verification
+- Automated OTP fetching using Gmail API
+- Playwright storage state authentication
 
 Authentication state is stored in:
 
@@ -177,9 +177,9 @@ npx prettier --write .
 
 GitHub Actions workflow is configured for:
 
-* dependency installation
-* Playwright browser setup
-* automated test execution
+- dependency installation
+- Playwright browser setup
+- automated test execution
 
 Workflow file:
 
@@ -195,22 +195,22 @@ Sensitive files are excluded using `.gitignore`.
 
 Ignored files include:
 
-* `.env`
-* Gmail credentials
-* auth tokens
-* Playwright auth states
-* reports and screenshots
+- `.env`
+- Gmail credentials
+- auth tokens
+- Playwright auth states
+- reports and screenshots
 
 ---
 
 # Future Scope
 
-* Functional module automation
-* Smoke suite execution
-* Cross-browser coverage
-* Portal-wise test grouping
-* Reporting enhancements
-* Parallel execution optimization
+- Functional module automation
+- Smoke suite execution
+- Cross-browser coverage
+- Portal-wise test grouping
+- Reporting enhancements
+- Parallel execution optimization
 
 ---
 

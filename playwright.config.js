@@ -29,7 +29,6 @@ export default defineConfig({
   globalSetup: "./global.setup.js",
 
   use: {
-
     trace: "on",
 
     screenshot: "only-on-failure",
