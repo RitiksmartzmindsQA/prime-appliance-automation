@@ -215,7 +215,9 @@ test("Complete work flow", async ({ page }) => {
     })
     .click();
 
-  // VERIFY SECONG RJA
+    // =========================
+    // VERIFY RJA SECOND
+    // =========================
 
   await sidebar.main.click();
 
@@ -261,7 +263,9 @@ test("Complete work flow", async ({ page }) => {
     "10.00$",
   );
 
-  await expect(page.locator("#parts-section")).toContainText("ABC123");
+  await expect(page.locator("#parts-section")).toContainText(
+    "ABC123"
+  );
 
   await expect(page.locator("#parts-section .parts-cost")).toContainText(
     "12.00$",
