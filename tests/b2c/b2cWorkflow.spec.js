@@ -88,5 +88,6 @@ test("Complete Workflow ", async ({ page }) =>
   await expect(page.locator(".category_name")).toHaveText("Electric Appliances - Diagnosis",);
   await expect(page.getByText("$110.00")).toBeVisible();
 
-  await page.pause();
+//   await page.pause();
+
 });

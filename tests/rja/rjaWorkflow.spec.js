@@ -5,7 +5,7 @@ import { Sidebar } from "../../pages/rja/Sidebar.js";
 test.use({storageState: "auth/rja-auth.json",});
 
 test("Complete work flow", async ({ page }) => {
-  
+
   const sidebar = new Sidebar(page);
 
   const companyName = `Test Company ${Date.now()}`;
@@ -216,5 +216,6 @@ test("Complete work flow", async ({ page }) => {
 
   console.log("Approve RJA is working");
 
-  await page.pause();
+  // await page.pause();
+  
 });
