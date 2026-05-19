@@ -1,17 +1,10 @@
-import { chromium }
-  from "@playwright/test";
+import { chromium } from "@playwright/test";
 
-import { portals }
-  from "./configs/portalConfig.js";
+import { portals } from "./configs/portalConfig.js";
 
-import { loginToPortal }
-  from "./utils/loginHelper.js";
+import { loginToPortal } from "./utils/loginHelper.js";
 
 async function globalSetup() {
-
-  if (process.env.PORTAL !== "rja") {
-    return;
-  }
 
   const browser =
     await chromium.launch();
@@ -25,9 +18,9 @@ async function globalSetup() {
     portals.rja
   );
 
-  // SAVE AUTH STATE
+  // Save auth state
   await page.context().storageState({
-    path: 'auth/rja-auth.json'
+    path: "auth/rja-auth.json",
   });
 
   await browser.close();
