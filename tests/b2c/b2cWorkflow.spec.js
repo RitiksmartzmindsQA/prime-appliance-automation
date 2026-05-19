@@ -56,8 +56,6 @@ test("Complete Workflow ", async ({ page }) =>
 
   await page.getByPlaceholder("Enter Province").fill("Test Province");
 
-  await page.getByPlaceholder("Enter Province").fill("Test Province");
-
   await page.getByPlaceholder("Enter Postal Code").fill("Test Postal Code");
 
   await page.getByPlaceholder("Enter Country").fill("Test Country");

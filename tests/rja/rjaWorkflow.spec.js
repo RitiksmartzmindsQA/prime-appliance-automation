@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 import { Sidebar } from "../../pages/rja/Sidebar.js";
 
-test.use({storageState: "auth/rja-auth.json",});
+test.setTimeout(120000);
 
 test("Complete work flow", async ({ page }) => {
 

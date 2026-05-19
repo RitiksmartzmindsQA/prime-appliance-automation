@@ -27,4 +27,8 @@ async function globalSetup() {
 
 }
 
+<<<<<<< ours
 export default globalSetup;
+=======
+export default globalSetup;
+>>>>>>> theirs
