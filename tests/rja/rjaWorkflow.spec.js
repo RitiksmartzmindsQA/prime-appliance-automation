@@ -2,11 +2,10 @@ import { test, expect } from "@playwright/test";
 
 import { Sidebar } from "../../pages/rja/Sidebar.js";
 
-test.use({
-  storageState: "auth/rja-auth.json",
-});
+test.use({storageState: "auth/rja-auth.json",});
 
 test("Complete work flow", async ({ page }) => {
+  
   const sidebar = new Sidebar(page);
 
   const companyName = `Test Company ${Date.now()}`;
@@ -33,11 +32,7 @@ test("Complete work flow", async ({ page }) => {
 
   await page.getByPlaceholder("Enter email").fill(companyEmail);
 
-  await page
-    .getByRole("button", {
-      name: "Save",
-    })
-    .click();
+  await page.getByRole("button", {name: "Save",}).click();
 
   await expect(page.getByText("Company added successfully.")).toBeVisible();
 
@@ -53,23 +48,13 @@ test("Complete work flow", async ({ page }) => {
 
   await sidebar.newRJA.click();
 
-  await expect(
-    page.getByRole("heading", {
-      name: "Transmission Details",
-    }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", {name: "Transmission Details",}),).toBeVisible();
 
-  await page.locator('select[wire\\:model="company_id"]').selectOption({
-    label: companyName,
-  });
+  await page.locator('select[wire\\:model="company_id"]').selectOption({label: companyName,});
 
-  await expect(
-    page.getByPlaceholder("Enter Maintenance Department Email"),
-  ).toHaveValue(companyEmail);
+  await expect(page.getByPlaceholder("Enter Maintenance Department Email"),).toHaveValue(companyEmail);
 
-  await page
-    .getByPlaceholder("Enter B2B/Warranty Reference")
-    .fill("Test Warranty Reference");
+  await page.getByPlaceholder("Enter B2B/Warranty Reference").fill("Test Warranty Reference");
 
   await page.getByPlaceholder("write your comments.....").fill("Test Comment");
 
@@ -79,11 +64,7 @@ test("Complete work flow", async ({ page }) => {
 
   await page.locator(".parts-cost").fill("12");
 
-  await page
-    .getByRole("button", {
-      name: "Send RJA to Maintenance Dept",
-    })
-    .click();
+  await page.getByRole("button", {name: "Send RJA to Maintenance Dept",}).click();
 
   // =========================
   // VERIFY SUBMITTED RJA
@@ -95,57 +76,31 @@ test("Complete work flow", async ({ page }) => {
 
   await sidebar.submittedRJA.click();
 
-  await expect(
-    page.getByRole("heading", { name: "Submitted RJA" }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Submitted RJA" }),).toBeVisible();
 
   await expect(page.getByText(companyName)).toBeVisible();
 
-  await page
-    .locator("table tbody tr")
-    .filter({
-      hasText: companyName,
-    })
-    .locator("td:first-child a")
-    .click();
+  await page.locator("table tbody tr").filter({hasText: companyName,}).locator("td:first-child a").click();
 
-  await expect(
-    page.getByRole("heading", {
-      name: "RJA Details",
-    }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", {name: "RJA Details",}),).toBeVisible();
 
   await expect(page.locator(".form-select")).toContainText(companyName);
 
-  await expect(
-    page.locator(".form-control").filter({ hasText: companyEmail }),
-  ).toBeVisible();
+  await expect(page.locator(".form-control").filter({ hasText: companyEmail }),).toBeVisible();
 
-  await expect(
-    page.locator(".card-body").getByText("Test Warranty Reference"),
-  ).toBeVisible();
+  await expect(page.locator(".card-body").getByText("Test Warranty Reference"),).toBeVisible();
 
-  await expect(
-    page.locator(".card-body").getByText("Test Comment"),
-  ).toBeVisible();
+  await expect(page.locator(".card-body").getByText("Test Comment"),).toBeVisible();
 
-  await expect(page.locator("#labour-section .labour-cost")).toContainText(
-    "10.00$",
-  );
+  await expect(page.locator("#labour-section .labour-cost")).toContainText("10.00$",);
 
   await expect(page.locator("#parts-section")).toContainText("ABC123");
 
-  await expect(page.locator("#parts-section .parts-cost")).toContainText(
-    "12.00$",
-  );
+  await expect(page.locator("#parts-section .parts-cost")).toContainText("12.00$",);
 
   console.log("Create RJA is working");
 
-  await page
-    .getByRole("button", {
-      name: "Reject",
-    })
-    .click();
+  await page.getByRole("button", {name: "Reject",}).click();
 
   // =========================
   // REJECT RJA FIRST
@@ -183,23 +138,13 @@ test("Complete work flow", async ({ page }) => {
 
   await sidebar.newRJA.click();
 
-  await expect(
-    page.getByRole("heading", {
-      name: "Transmission Details",
-    }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Transmission Details" }),).toBeVisible();
 
-  await page.locator('select[wire\\:model="company_id"]').selectOption({
-    label: companyName,
-  });
+  await page.locator('select[wire\\:model="company_id"]').selectOption({label: companyName,});
 
-  await expect(
-    page.getByPlaceholder("Enter Maintenance Department Email"),
-  ).toHaveValue(companyEmail);
+  await expect(page.getByPlaceholder("Enter Maintenance Department Email"),).toHaveValue(companyEmail);
 
-  await page
-    .getByPlaceholder("Enter B2B/Warranty Reference")
-    .fill("Test Warranty Reference");
+  await page.getByPlaceholder("Enter B2B/Warranty Reference").fill("Test Warranty Reference");
 
   await page.getByPlaceholder("write your comments.....").fill("Test Comment");
 
@@ -209,15 +154,11 @@ test("Complete work flow", async ({ page }) => {
 
   await page.locator(".parts-cost").fill("12");
 
-  await page
-    .getByRole("button", {
-      name: "Send RJA to Maintenance Dept",
-    })
-    .click();
+  await page.getByRole("button", {name: "Send RJA to Maintenance Dept",}).click();
 
-    // =========================
-    // VERIFY RJA SECOND
-    // =========================
+  // =========================
+  // VERIFY RJA SECOND
+  // =========================
 
   await sidebar.main.click();
 
@@ -225,57 +166,29 @@ test("Complete work flow", async ({ page }) => {
 
   await sidebar.submittedRJA.click();
 
-  await expect(
-    page.getByRole("heading", { name: "Submitted RJA" }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Submitted RJA" }),).toBeVisible();
 
   await expect(page.getByText(companyName)).toBeVisible();
 
-  await page
-    .locator("table tbody tr")
-    .filter({
-      hasText: companyName,
-    })
-    .locator("td:first-child a")
-    .click();
+  await page.locator("table tbody tr").filter({hasText: companyName,}).locator("td:first-child a").click();
 
-  await expect(
-    page.getByRole("heading", {
-      name: "RJA Details",
-    }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", {name: "RJA Details",}),).toBeVisible();
 
   await expect(page.locator(".form-select")).toContainText(companyName);
 
-  await expect(
-    page.locator(".form-control").filter({ hasText: companyEmail }),
-  ).toBeVisible();
+  await expect(page.locator(".form-control").filter({ hasText: companyEmail }),).toBeVisible();
 
-  await expect(
-    page.locator(".card-body").getByText("Test Warranty Reference"),
-  ).toBeVisible();
+  await expect(page.locator(".card-body").getByText("Test Warranty Reference"),).toBeVisible();
 
-  await expect(
-    page.locator(".card-body").getByText("Test Comment"),
-  ).toBeVisible();
+  await expect(page.locator(".card-body").getByText("Test Comment"),).toBeVisible();
 
-  await expect(page.locator("#labour-section .labour-cost")).toContainText(
-    "10.00$",
-  );
+  await expect(page.locator("#labour-section .labour-cost")).toContainText("10.00$",);
 
-  await expect(page.locator("#parts-section")).toContainText(
-    "ABC123"
-  );
+  await expect(page.locator("#parts-section")).toContainText("ABC123");
 
-  await expect(page.locator("#parts-section .parts-cost")).toContainText(
-    "12.00$",
-  );
+  await expect(page.locator("#parts-section .parts-cost")).toContainText("12.00$",);
 
-  await page
-    .getByRole("button", {
-      name: "Approve",
-    })
-    .click();
+  await page.getByRole("button", {name: "Approve",}).click();
 
   // =========================
   // APPROVE RJA SECOND
@@ -302,4 +215,6 @@ test("Complete work flow", async ({ page }) => {
   await expect(page.getByText(companyEmail)).toBeVisible();
 
   console.log("Approve RJA is working");
+
+  await page.pause();
 });
