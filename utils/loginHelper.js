@@ -59,7 +59,13 @@ export async function loginToPortal(page, portal) {
   // Click Verify/Login
   await loginPage.clickVerifyButton();
 
-  await expect(loginPage.emailInput).toBeHidden({
-    timeout: 30000,
-  });
+  if (portal.authenticatedSelector) {
+    await expect(page.locator(portal.authenticatedSelector)).toBeVisible({
+      timeout: 30000,
+    });
+  } else {
+    await expect(loginPage.emailInput).toBeHidden({
+      timeout: 30000,
+    });
+  }
 }

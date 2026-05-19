@@ -5,6 +5,7 @@ export const portals = {
     name: "rja",
     url: process.env.RJA_URL,
     email: process.env.COMMON_EMAIL,
+    authenticatedSelector: "#sidebar",
   },
 
   compliance: {

@@ -14,6 +14,8 @@ test("Complete work flow", async ({ page }) => {
 
   await page.goto(process.env.RJA_URL);
 
+  await expect(sidebar.sidebar).toBeVisible();
+
   // =========================
   // CREATE COMPANY
   // =========================
