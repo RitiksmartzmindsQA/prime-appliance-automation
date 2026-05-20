@@ -12,7 +12,7 @@ test("Complete Workflow ", async ({ page }) =>
 
   await sidebar.newBooking.click();
 
-  await expect(page.getByRole("heading", { name: "Our services" }),).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Our services" })).toBeVisible();
 
   await page.getByRole("link", { name: "Select" }).first().click();
 
@@ -20,7 +20,7 @@ test("Complete Workflow ", async ({ page }) =>
 
   await page.getByRole("button", { name: "Next" }).click();
 
-  await expect(page.getByRole("heading", { name: "Appliance Information" }),).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Appliance Information" })).toBeVisible();
 
   await page.getByPlaceholder("Enter Brand").fill("Test Brand");
 
@@ -28,7 +28,7 @@ test("Complete Workflow ", async ({ page }) =>
 
   await page.getByRole("button", { name: "Next" }).click();
 
-  await expect(page.getByRole("heading", { name: "Problem and Notes" }),).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Problem and Notes" })).toBeVisible();
 
   await page.getByPlaceholder("Problem Description").fill("Test Customer Problem Description");
 
@@ -36,7 +36,7 @@ test("Complete Workflow ", async ({ page }) =>
 
   await page.getByRole("button", { name: "Next" }).click();
 
-  await expect(page.getByRole("heading", {name: "Customer Information",}),).toBeVisible();
+  await expect(page.getByRole("heading", {name: "Customer Information",})).toBeVisible();
 
   await page.getByPlaceholder("Enter Your First Name").fill("Test First Name");
 
@@ -64,7 +64,7 @@ test("Complete Workflow ", async ({ page }) =>
 
   await page.getByRole("button", { name: "Next" }).click();
 
-  await expect(page.getByRole("heading", {name: "Please Confirm Details",}),).toBeVisible();
+  await expect(page.getByRole("heading", {name: "Please Confirm Details",})).toBeVisible();
 
   await expect(page.getByText("Test First Name Test Last Name")).toBeVisible();
 
@@ -90,7 +90,7 @@ test("Complete Workflow ", async ({ page }) =>
 
   await page.getByRole("button", { name: "Confirm" }).click();
 
-  await expect(page.getByRole("heading", {name: "Congratulations!",}),).toBeVisible();
+  await expect(page.getByRole("heading", {name: "Congratulations!",})).toBeVisible();
 
   await expect(page.getByText("Booking created successfully"),).toBeVisible();
 
@@ -102,6 +102,6 @@ test("Complete Workflow ", async ({ page }) =>
  
   await sidebar.openingHours.click();
 
-  await page.pause();
+  // await page.pause();
 
 });

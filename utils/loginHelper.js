@@ -2,70 +2,68 @@ import { expect } from "@playwright/test";
 
 import { LoginPage } from "../pages/common/LoginPage.js";
 
-import { getLatestOTP } from "./otpHelper.js";
+import { waitForOTP }
+  from "./otpHelper.js";
 
-async function waitForOTP() {
-  const timeout = 60000;
-  const interval = 5000;
-  const deadline = Date.now() + timeout;
+export async function loginToPortal(
+  page,
+  portal
+) {
+  const loginPage =
+    new LoginPage(page);
 
-  let lastError;
-
-  while (Date.now() < deadline) {
-    try {
-      const otp = await getLatestOTP();
-
-      if (/^\d{4,6}$/.test(otp)) {
-        return otp;
-      }
-
-      lastError = new Error(`Invalid OTP format received: ${otp}`);
-    } catch (error) {
-      lastError = error;
-    }
-
-    await new Promise((resolve) => setTimeout(resolve, interval));
-  }
-
-  throw new Error(
-    `OTP was not found within ${timeout / 1000} seconds. Last error: ${
-      lastError?.message ?? "No OTP email found"
-    }`,
+  await page.goto(
+    portal.url
   );
-}
 
-export async function loginToPortal(page, portal) {
-  const loginPage = new LoginPage(page);
-
-  // Open portal
-  await page.goto(portal.url);
+  const otpRequestedAt =
+    Date.now();
 
   // Enter email
-  await loginPage.enterEmail(portal.email);
+  await loginPage.enterEmail(
+    portal.email
+  );
 
-  await expect(loginPage.otpInput).toBeVisible({
+  await expect(
+    loginPage.otpInput
+  ).toBeVisible({
     timeout: 15000,
   });
 
-  const otp = await waitForOTP();
+  // Fetch OTP
+  const otp =
+    await waitForOTP(
+      60000,
+      otpRequestedAt
+    );
 
-  console.log("Fetched OTP:", otp);
+  console.log(
+    "Fetched OTP:",
+    otp
+  );
 
-  // Enter OTP
-  await loginPage.enterOTP(otp);
+  // Fill OTP
+  await loginPage.enterOTP(
+    otp
+  );
 
-  await expect(loginPage.otpInput).toHaveValue(otp);
-
-  // Click Verify/Login
+  // Verify OTP
   await loginPage.clickVerifyButton();
 
   if (portal.authenticatedSelector) {
-    await expect(page.locator(portal.authenticatedSelector)).toBeVisible({
+    await expect(
+      page.locator(
+        portal.authenticatedSelector
+      )
+    ).toBeVisible({
       timeout: 30000,
     });
   } else {
-    await expect(loginPage.emailInput).toBeHidden({
+    await expect(
+      loginPage.emailInput
+    ).toBeHidden({
       timeout: 30000,
     });
   }
+
 }

@@ -50,7 +50,7 @@ test("Complete work flow", async ({ page }) => {
 
   await sidebar.newRJA.click();
 
-  await expect(page.getByRole("heading", {name: "Transmission Details",}),).toBeVisible();
+  await expect(page.getByRole("heading", {name: "Transmission Details",})).toBeVisible();
 
   await page.locator('select[wire\\:model="company_id"]').selectOption({label: companyName,});
 
@@ -78,17 +78,17 @@ test("Complete work flow", async ({ page }) => {
 
   await sidebar.submittedRJA.click();
 
-  await expect(page.getByRole("heading", { name: "Submitted RJA" }),).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Submitted RJA" })).toBeVisible();
 
   await expect(page.getByText(companyName)).toBeVisible();
 
   await page.locator("table tbody tr").filter({hasText: companyName,}).locator("td:first-child a").click();
 
-  await expect(page.getByRole("heading", {name: "RJA Details",}),).toBeVisible();
+  await expect(page.getByRole("heading", {name: "RJA Details",})).toBeVisible();
 
   await expect(page.locator(".form-select")).toContainText(companyName);
 
-  await expect(page.locator(".form-control").filter({ hasText: companyEmail }),).toBeVisible();
+  await expect(page.locator(".form-control").filter({ hasText: companyEmail })).toBeVisible();
 
   await expect(page.locator(".card-body").getByText("Test Warranty Reference"),).toBeVisible();
 
@@ -140,7 +140,7 @@ test("Complete work flow", async ({ page }) => {
 
   await sidebar.newRJA.click();
 
-  await expect(page.getByRole("heading", { name: "Transmission Details" }),).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Transmission Details" })).toBeVisible();
 
   await page.locator('select[wire\\:model="company_id"]').selectOption({label: companyName,});
 
@@ -168,17 +168,17 @@ test("Complete work flow", async ({ page }) => {
 
   await sidebar.submittedRJA.click();
 
-  await expect(page.getByRole("heading", { name: "Submitted RJA" }),).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Submitted RJA" })).toBeVisible();
 
   await expect(page.getByText(companyName)).toBeVisible();
 
   await page.locator("table tbody tr").filter({hasText: companyName,}).locator("td:first-child a").click();
 
-  await expect(page.getByRole("heading", {name: "RJA Details",}),).toBeVisible();
+  await expect(page.getByRole("heading", {name: "RJA Details",})).toBeVisible();
 
   await expect(page.locator(".form-select")).toContainText(companyName);
 
-  await expect(page.locator(".form-control").filter({ hasText: companyEmail }),).toBeVisible();
+  await expect(page.locator(".form-control").filter({ hasText: companyEmail })).toBeVisible();
 
   await expect(page.locator(".card-body").getByText("Test Warranty Reference"),).toBeVisible();
 

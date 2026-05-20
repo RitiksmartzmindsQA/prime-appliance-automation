@@ -5,6 +5,7 @@ reports
 screenshots
 
 auth/token.json
+auth/rja-auth.json
 auth/*-auth.json
 auth/credentials.json
 

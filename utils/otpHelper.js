@@ -1,42 +1,176 @@
 import { google } from "googleapis";
 
-import { authorize } from "./gmailHelper.js";
+import {
+  authorize,
+  reauthorize,
+}
+  from "./gmailHelper.js";
 
-export async function getLatestOTP() {
-  const auth = await authorize();
+function isInvalidGrant(error) {
+  return error?.message?.includes(
+    "invalid_grant"
+  ) || error?.response?.data?.error ===
+    "invalid_grant";
+}
 
-  const gmail = google.gmail({
+function createGmailClient(auth) {
+  return google.gmail({
     version: "v1",
     auth,
   });
+}
 
-  const response = await gmail.users.messages.list({
-    userId: "me",
-    maxResults: 5,
-  });
+export async function waitForOTP(
+  timeout = 60000,
+  since = Date.now()
+) {
 
-  const messages = response.data.messages;
+  let auth =
+    await authorize();
 
-  if (!messages || messages.length === 0) {
-    throw new Error("No messages found");
-  }
+  let gmail =
+    createGmailClient(auth);
 
-  for (const message of messages) {
-    const msg = await gmail.users.messages.get({
-      userId: "me",
-      id: message.id,
-    });
+  const startTime =
+    Date.now();
 
-    const snippet = msg.data.snippet;
+  let tokenWasRefreshed =
+    false;
 
-    console.log("EMAIL SNIPPET:", snippet);
+  while (
+    Date.now() - startTime <
+    timeout
+  ) {
 
-    const otpMatch = snippet.match(/\b\d{4,6}\b/);
+    try {
 
-    if (otpMatch) {
-      return otpMatch[0];
+      const response =
+        await gmail.users.messages.list({
+
+          userId: "me",
+
+          // Fetch ONLY unread OTP emails
+          q: 'is:unread subject:"Your OTP Code"',
+
+          maxResults: 10,
+
+        });
+
+      const messages =
+        response.data.messages;
+
+      if (
+        messages &&
+        messages.length > 0
+      ) {
+        const otpMessages =
+          [];
+
+        for (const message of messages) {
+
+          const msg =
+            await gmail.users.messages.get({
+
+              userId: "me",
+
+              id: message.id,
+
+            });
+
+          const snippet =
+            msg.data.snippet;
+
+          const receivedAt =
+            Number(
+              msg.data.internalDate
+            );
+
+          if (
+            receivedAt &&
+            receivedAt < since - 10000
+          ) {
+            continue;
+          }
+
+          otpMessages.push({
+            receivedAt,
+            snippet,
+          });
+
+        }
+
+        otpMessages.sort(
+          (first, second) =>
+            second.receivedAt -
+            first.receivedAt
+        );
+
+        for (const {
+          snippet,
+        } of otpMessages) {
+
+          console.log(
+            "EMAIL SNIPPET:",
+            snippet
+          );
+
+          // Extract OTP
+          const otpMatch =
+            snippet.match(
+              /\b\d{4,6}\b/
+            );
+
+          if (otpMatch) {
+
+            return otpMatch[0];
+
+          }
+
+        }
+
+      }
+
+    } catch (error) {
+
+      if (
+        isInvalidGrant(error) &&
+        !tokenWasRefreshed
+      ) {
+
+        console.log(
+          "Saved Gmail token is invalid. Creating a new token."
+        );
+
+        auth =
+          await reauthorize();
+
+        gmail =
+          createGmailClient(auth);
+
+        tokenWasRefreshed =
+          true;
+
+      } else {
+
+        throw error;
+
+      }
+
     }
+
+    // Wait 3 seconds
+    await new Promise(
+      (resolve) =>
+        setTimeout(
+          resolve,
+          3000
+        )
+    );
+
   }
 
-  throw new Error("OTP not found");
+  throw new Error(
+    "OTP was not found within timeout."
+  );
+
 }

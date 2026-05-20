@@ -1,68 +1,120 @@
-import fs from "fs";
-import readline from "readline";
-import { google } from "googleapis";
+import fs from "fs/promises";
 
-const SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"];
+import path from "path";
 
-const TOKEN_PATH = "auth/token.json";
+import { authenticate }
+  from "@google-cloud/local-auth";
 
-export async function authorize() {
-  const credentials = JSON.parse(fs.readFileSync("auth/credentials.json"));
+import { google }
+  from "googleapis";
 
-  const { client_secret, client_id, redirect_uris } = credentials.installed;
+const SCOPES = [
+  "https://www.googleapis.com/auth/gmail.readonly",
+];
 
-  const oAuth2Client = new google.auth.OAuth2(
-    client_id,
-    client_secret,
-    redirect_uris[0],
+const TOKEN_PATH =
+  path.join(
+    "auth",
+    "token.json"
   );
 
-  // Check if token exists
-  if (fs.existsSync(TOKEN_PATH)) {
-    const token = fs.readFileSync(TOKEN_PATH, "utf8");
+const CREDENTIALS_PATH =
+  path.join(
+    "auth",
+    "credentials.json"
+  );
 
-    if (token) {
-      oAuth2Client.setCredentials(JSON.parse(token));
-
-      return oAuth2Client;
-    }
-  }
-
-  return getNewToken(oAuth2Client);
+export async function authorize() {
+  return authorizeWithToken();
 }
 
-function getNewToken(oAuth2Client) {
-  return new Promise((resolve, reject) => {
-    const authUrl = oAuth2Client.generateAuthUrl({
-      access_type: "offline",
-      scope: SCOPES,
-    });
+export async function reauthorize() {
+  if (process.env.CI) {
+    throw new Error(
+      "Gmail token is invalid in CI. Update the GOOGLE_TOKEN GitHub secret with a fresh auth/token.json value."
+    );
+  }
 
-    console.log("\nAuthorize this app by visiting this URL:\n");
+  await fs.rm(
+    TOKEN_PATH,
+    {
+      force: true,
+    }
+  );
 
-    console.log(authUrl);
+  return authorizeWithToken();
+}
 
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
+async function authorizeWithToken() {
+  const credentials =
+    JSON.parse(
+      await fs.readFile(
+        CREDENTIALS_PATH,
+        "utf8"
+      )
+    );
 
-    rl.question("\nEnter the code here: ", (code) => {
-      rl.close();
+  const {
+    client_secret,
+    client_id,
+    redirect_uris,
+  } = credentials.installed;
 
-      oAuth2Client.getToken(code, (err, token) => {
-        if (err) {
-          return reject(err);
-        }
+  const oAuth2Client =
+    new google.auth.OAuth2(
+      client_id,
+      client_secret,
+      redirect_uris[0]
+    );
 
-        oAuth2Client.setCredentials(token);
+  try {
 
-        fs.writeFileSync(TOKEN_PATH, JSON.stringify(token, null, 2));
+    // Existing token
+    const token =
+      await fs.readFile(
+        TOKEN_PATH,
+        "utf8"
+      );
 
-        console.log("\nToken stored successfully.\n");
+    oAuth2Client.setCredentials(
+      JSON.parse(token)
+    );
 
-        resolve(oAuth2Client);
+    return oAuth2Client;
+
+  } catch {
+
+    // Automatic Google Login
+    const auth =
+      await authenticate({
+
+        scopes: SCOPES,
+
+        keyfilePath:
+          CREDENTIALS_PATH,
+
       });
-    });
-  });
+
+    await fs.writeFile(
+      TOKEN_PATH,
+
+      JSON.stringify(
+        auth.credentials,
+        null,
+        2
+      )
+    );
+
+    oAuth2Client.setCredentials(
+      auth.credentials
+    );
+
+    console.log(
+      "\nToken stored successfully.\n"
+    );
+
+    return oAuth2Client;
+
+  }
+
 }
