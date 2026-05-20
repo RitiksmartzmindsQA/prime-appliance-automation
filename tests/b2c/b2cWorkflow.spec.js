@@ -86,6 +86,22 @@ test("Complete Workflow ", async ({ page }) =>
   await expect(page.locator(".category_name")).toHaveText("Electric Appliances - Diagnosis",);
   await expect(page.getByText("$110.00")).toBeVisible();
 
-//   await page.pause();
+  await expect(page.getByRole("button", { name: "Confirm" })).toBeEnabled();
+
+  await page.getByRole("button", { name: "Confirm" }).click();
+
+  await expect(page.getByRole("heading", {name: "Congratulations!",}),).toBeVisible();
+
+  await expect(page.getByText("Booking created successfully"),).toBeVisible();
+
+  await page.getByRole("button", {name: "OK",}).click();
+
+  await sidebar.openSidebar.click();
+
+  await sidebar.contactUs.click();
+ 
+  await sidebar.openingHours.click();
+
+  await page.pause();
 
 });

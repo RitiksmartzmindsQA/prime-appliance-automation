@@ -13,10 +13,23 @@ export default defineConfig({
   reporter: "html",
 
   use: {
-    ...devices["Desktop Chrome"],
+
+    browserName: "chromium",
+
+    viewport: null,
+
     trace: "on",
+
     screenshot: "only-on-failure",
+
     video: "retain-on-failure",
+
+    launchOptions: {
+
+      args: ["--start-maximized"],
+
+    },
+
   },
 
   projects: [
