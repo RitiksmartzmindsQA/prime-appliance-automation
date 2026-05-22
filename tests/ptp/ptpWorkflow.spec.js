@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 import { Sidebar } from "../../pages/ptp/Sidebar.js";
 
-import { ptpData } from "../../test-data/ptpData.js";
+import { ptpData } from "../../test-data/PtpData.js";
 
 test("PTP portal loads with saved auth", async ({ page }) => {
 
@@ -66,6 +66,6 @@ test("PTP portal loads with saved auth", async ({ page }) => {
 
   // await page.locator('input[wire\\:model$=".current_job_sub_stage"]').last().fill("New Inquiry");
 
-  await page.pause();
+  // await page.pause();
 
 });
