@@ -1,5 +1,3 @@
-// pages/sidebar.js
-
 export class Sidebar {
   constructor(page) {
     this.page = page;

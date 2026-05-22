@@ -1,6 +1,6 @@
 // @ts-check
 
-import { defineConfig, devices } from "@playwright/test";
+import { defineConfig } from "@playwright/test";
 import "dotenv/config";
 
 export default defineConfig({
@@ -16,10 +16,7 @@ export default defineConfig({
 
     browserName: "chromium",
 
-    viewport: {
-      width: 1920,
-      height: 1080,
-    },
+    viewport: null,
 
     trace: "on",
 
@@ -39,15 +36,29 @@ export default defineConfig({
     {
       name: "rja-auth-setup",
       testMatch: "setup/auth.setup.js",
+      metadata: { portalName: "rja" },
     },
+
     {
       name: "rja",
       testMatch: "rja/**/*.spec.js",
       dependencies: ["rja-auth-setup"],
-      use: {
-        storageState: "auth/rja-auth.json",
-      },
+      use: { storageState: "auth/rja-auth.json" },
     },
+
+    {
+      name: "ptp-auth-setup",
+      testMatch: "setup/auth.setup.js",
+      metadata: { portalName: "ptp" },
+    },
+
+    {
+      name: "ptp",
+      testMatch: "ptp/**/*.spec.js",
+      dependencies: ["ptp-auth-setup"],
+      use: { storageState: "auth/ptp-auth.json" },
+    },
+
     {
       name: "b2c",
       testMatch: "b2c/**/*.spec.js",

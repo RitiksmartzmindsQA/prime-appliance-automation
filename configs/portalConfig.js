@@ -42,6 +42,7 @@ export const portals = {
     name: "ptp",
     url: process.env.PTP_URL,
     email: process.env.COMMON_EMAIL,
+    authenticatedSelector: "#sidebar",
   },
 
   b2b: {

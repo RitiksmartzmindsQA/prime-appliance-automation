@@ -16,10 +16,6 @@ test("Complete work flow", async ({ page }) => {
 
   await expect(sidebar.sidebar).toBeVisible();
 
-  // =========================
-  // CREATE COMPANY
-  // =========================
-
   await sidebar.main.click();
 
   await sidebar.settings.click();
@@ -39,10 +35,6 @@ test("Complete work flow", async ({ page }) => {
   await expect(page.getByText("Company added successfully.")).toBeVisible();
 
   console.log("Company Created successfully");
-
-  // =========================
-  // NEW RJA FIRST
-  // =========================
 
   await sidebar.main.click();
 
@@ -68,10 +60,6 @@ test("Complete work flow", async ({ page }) => {
 
   await page.getByRole("button", {name: "Send RJA to Maintenance Dept",}).click();
 
-  // =========================
-  // VERIFY SUBMITTED RJA
-  // =========================
-
   await sidebar.main.click();
 
   await sidebar.rjaPanel.click();
@@ -88,7 +76,7 @@ test("Complete work flow", async ({ page }) => {
 
   await expect(page.locator(".form-select")).toContainText(companyName);
 
-  await expect(page.locator(".form-control").filter({ hasText: companyEmail })).toBeVisible();
+  await expect(page.locator(".form-control").filter({ hasText: companyEmail }),).toBeVisible();
 
   await expect(page.locator(".card-body").getByText("Test Warranty Reference"),).toBeVisible();
 
@@ -100,13 +88,9 @@ test("Complete work flow", async ({ page }) => {
 
   await expect(page.locator("#parts-section .parts-cost")).toContainText("12.00$",);
 
-  console.log("Create RJA is working");
+  console.log("RJA 1 Created successfully");
 
   await page.getByRole("button", {name: "Reject",}).click();
-
-  // =========================
-  // REJECT RJA FIRST
-  // =========================
 
   await page.locator("#fname").fill("test");
 
@@ -128,11 +112,7 @@ test("Complete work flow", async ({ page }) => {
 
   await expect(page.getByText(companyEmail)).toBeVisible();
 
-  console.log("Denied RJA is working");
-
-  // =========================
-  // NEW RJA SECOND
-  // =========================
+  console.log("RJA 1 Rejected successfully");
 
   await sidebar.main.click();
 
@@ -158,10 +138,6 @@ test("Complete work flow", async ({ page }) => {
 
   await page.getByRole("button", {name: "Send RJA to Maintenance Dept",}).click();
 
-  // =========================
-  // VERIFY RJA SECOND
-  // =========================
-
   await sidebar.main.click();
 
   await sidebar.rjaPanel.click();
@@ -178,7 +154,7 @@ test("Complete work flow", async ({ page }) => {
 
   await expect(page.locator(".form-select")).toContainText(companyName);
 
-  await expect(page.locator(".form-control").filter({ hasText: companyEmail })).toBeVisible();
+  await expect(page.locator(".form-control").filter({ hasText: companyEmail }),).toBeVisible();
 
   await expect(page.locator(".card-body").getByText("Test Warranty Reference"),).toBeVisible();
 
@@ -190,11 +166,9 @@ test("Complete work flow", async ({ page }) => {
 
   await expect(page.locator("#parts-section .parts-cost")).toContainText("12.00$",);
 
-  await page.getByRole("button", {name: "Approve",}).click();
+  console.log("RJA 2 Created successfully");
 
-  // =========================
-  // APPROVE RJA SECOND
-  // =========================
+  await page.getByRole("button", {name: "Approve",}).click();
 
   await page.locator("#fname").fill("test");
 
@@ -216,7 +190,7 @@ test("Complete work flow", async ({ page }) => {
 
   await expect(page.getByText(companyEmail)).toBeVisible();
 
-  console.log("Approve RJA is working");
+  console.log("RJA 2 Approved successfully");
 
   // await page.pause();
   

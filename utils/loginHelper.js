@@ -37,11 +37,6 @@ export async function loginToPortal(
       otpRequestedAt
     );
 
-  console.log(
-    "Fetched OTP:",
-    otp
-  );
-
   // Fill OTP
   await loginPage.enterOTP(
     otp

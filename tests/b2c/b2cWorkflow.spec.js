@@ -96,6 +96,8 @@ test("Complete Workflow ", async ({ page }) =>
 
   await page.getByRole("button", {name: "OK",}).click();
 
+  console.log("B2C Form Submitted successfully");
+
   await sidebar.openSidebar.click();
 
   await sidebar.contactUs.click();

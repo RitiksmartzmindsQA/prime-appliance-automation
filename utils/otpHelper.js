@@ -109,11 +109,6 @@ export async function waitForOTP(
           snippet,
         } of otpMessages) {
 
-          console.log(
-            "EMAIL SNIPPET:",
-            snippet
-          );
-
           // Extract OTP
           const otpMatch =
             snippet.match(
