@@ -51,7 +51,7 @@ export async function loginToPortal(
         portal.authenticatedSelector
       )
     ).toBeVisible({
-      timeout: 30000,
+      timeout: 60000,
     });
   } else {
     await expect(

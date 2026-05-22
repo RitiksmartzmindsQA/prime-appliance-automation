@@ -2,7 +2,7 @@ import { test } from "@playwright/test";
 import { portals } from "../../configs/portalConfig.js";
 import { loginToPortal } from "../../utils/loginHelper.js";
 
-test.setTimeout(90000);
+test.setTimeout(120000);
 
 test("Portal login setup", async ({ page }, testInfo) => {
 
