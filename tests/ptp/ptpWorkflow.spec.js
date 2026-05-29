@@ -50,9 +50,11 @@ test("PTP portal loads with saved auth", async ({ page }) => {
 
   // await page.getByRole("button", {name: "Add Main Stage",}).click();
 
+  // await page.waitForTimeout(5000);
+
   // await expect(page.locator('input[wire\\:model$=".board_id"]').last()).toBeVisible();
 
-  // await page.locator('input[wire\\:model$=".board_id"]').last().fill("4444444444");
+  // await page.locator('input[wire\\:model$="main_stage.board_id"]').last().fill("4444444444");
 
   // await page.locator('input[wire\\:model$=".current_job_main_stage"]').last().fill("Test Current Job Main Stage");
 

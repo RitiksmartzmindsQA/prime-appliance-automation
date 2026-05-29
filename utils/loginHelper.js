@@ -13,8 +13,32 @@ export async function loginToPortal(
     new LoginPage(page);
 
   await page.goto(
+    portal.loginUrl ??
     portal.url
   );
+
+  if (
+    !await loginPage.emailInput
+      .isVisible({
+        timeout: 5000,
+      })
+      .catch(() => false)
+  ) {
+    const loginLink =
+      page.getByRole("link", {
+        name: /^login$/i,
+      });
+
+    if (
+      await loginLink
+        .isVisible({
+          timeout: 5000,
+        })
+        .catch(() => false)
+    ) {
+      await loginLink.click();
+    }
+  }
 
   const otpRequestedAt =
     Date.now();
