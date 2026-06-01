@@ -98,12 +98,6 @@ test("Complete Workflow ", async ({ page }) =>
 
   console.log("B2C Form Submitted successfully");
 
-  await sidebar.openSidebar.click();
-
-  await sidebar.contactUs.click();
- 
-  await sidebar.openingHours.click();
-
   // await page.pause();
 
 });

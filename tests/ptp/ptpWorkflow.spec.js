@@ -4,7 +4,7 @@ import { Sidebar } from "../../pages/ptp/Sidebar.js";
 
 import { ptpData } from "../../test-data/PtpData.js";
 
-test("PTP portal loads with saved auth", async ({ page }) => {
+test("Complete Workflow", async ({ page }) => {
 
   const sidebar = new Sidebar(page);
 

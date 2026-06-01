@@ -58,7 +58,8 @@ export async function loginToPortal(
   const otp =
     await waitForOTP(
       60000,
-      otpRequestedAt
+      otpRequestedAt,
+      portal.otpEmailSubject
     );
 
   // Fill OTP

@@ -22,7 +22,8 @@ function createGmailClient(auth) {
 
 export async function waitForOTP(
   timeout = 60000,
-  since = Date.now()
+  since = Date.now(),
+  subject = "Your OTP Code"
 ) {
 
   let auth =
@@ -50,7 +51,7 @@ export async function waitForOTP(
           userId: "me",
 
           // Fetch ONLY unread OTP emails
-          q: 'is:unread subject:"Your OTP Code"',
+          q: `is:unread subject:"${subject}"`,
 
           maxResults: 10,
 

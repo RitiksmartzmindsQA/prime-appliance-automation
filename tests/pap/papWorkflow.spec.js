@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 import { Sidebar } from "../../pages/pap/Sidebar.js";
 
-test("PAP portal loads with saved auth", async ({ page }) => {
+test("Complete Wokflow", async ({ page }) => {
 
     const sidebar = new Sidebar(page);
 

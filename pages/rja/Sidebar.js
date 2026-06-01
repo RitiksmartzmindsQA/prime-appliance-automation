@@ -4,9 +4,6 @@ export class Sidebar {
 
     this.sidebar = page.locator("#sidebar");
 
-    // =========================
-    // RJA PANEL
-    // =========================
     this.main = this.sidebar.getByRole("link", {
       name: "Main",
     });
@@ -30,10 +27,6 @@ export class Sidebar {
     this.deniedRJA = this.sidebar.getByRole("link", {
       name: "Denied RJA",
     });
-
-    // =========================
-    // SETTINGS
-    // =========================
 
     this.settings = this.sidebar.getByRole("link", {
       name: /Settings/,
