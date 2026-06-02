@@ -78,6 +78,6 @@ test("Complete Workflow", async ({ page }) => {
 
     // await sidebar.submittedIDV.click();
 
-    await page.pause();
+    // await page.pause();
 
 });
