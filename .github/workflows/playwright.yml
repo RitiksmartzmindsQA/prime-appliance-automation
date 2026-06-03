@@ -38,7 +38,8 @@ jobs:
         run: npm ci
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        timeout-minutes: 15
+        run: npx playwright install --with-deps chromium
 
       - name: Create Gmail Auth Files
         env:
