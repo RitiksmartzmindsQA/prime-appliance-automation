@@ -60,7 +60,7 @@ test("Complete Workflow", async ({ page }) => {
     await page.locator('textarea[wire\\:model="customer_problem_description"]').click();
     await page.keyboard.type("Test customer problem description");
 
-    await page.locator("#fileInput").setInputFiles("878-100x100.jpg");
+    await page.locator("#fileInput").setInputFiles("assets/images/878-100x100.jpg");
 
     await page.getByPlaceholder("Appliance Full Model Number").click();
     await page.getByPlaceholder("Appliance Full Model Number").pressSequentially("Test Appliance Full Model Number");
@@ -68,7 +68,7 @@ test("Complete Workflow", async ({ page }) => {
     await page.getByPlaceholder("Appliance Full Serial Number").click();
     await page.getByPlaceholder("Appliance Full Serial Number").pressSequentially("Test appliance serial number");
 
-    await page.locator("#fileInputModelSerial").setInputFiles("878-100x100.jpg");
+    await page.locator("#fileInput").setInputFiles("assets/images/878-100x100.jpg");
 
     await page.getByRole('button', {name: 'Submit'}).click();
 
