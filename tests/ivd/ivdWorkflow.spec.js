@@ -5,6 +5,7 @@ import { Sidebar } from "../../pages/ivd/Sidebar.js";
 test("Complete Workflow", async ({ page }) => {
 
     const sidebar = new Sidebar(page);
+    const uniqueId = Date.now();
 
     await page.goto(process.env.IVD_URL);
 
@@ -21,7 +22,7 @@ test("Complete Workflow", async ({ page }) => {
     console.log("New IDV page opened successfully");
 
     await page.getByPlaceholder("Prime Job UUID").click();
-    await page.getByPlaceholder("Prime Job UUID").pressSequentially("Test Job UUID");
+    await page.getByPlaceholder("Prime Job UUID").pressSequentially(`Test Job UUID ${uniqueId}`);
 
     await page.getByPlaceholder("B2B/Warranty Reference").click();
     await page.getByPlaceholder("B2B/Warranty Reference").pressSequentially("Test B2B/Warranty Reference");
@@ -70,14 +71,16 @@ test("Complete Workflow", async ({ page }) => {
 
     await page.locator("#fileInputModelSerial").setInputFiles("assets/images/dummy-image.jpg");
 
-    // await expect(page.getByText("IDV has been successfully saved!")).toBeVisible();
+    await page.getByRole('button', {name: 'Submit'}).click();
 
-    // await page.getByRole('button', {name: 'Submit'}).click();
+    await expect(page.getByPlaceholder("Prime Job UUID")).toHaveValue("");
 
-    // await sidebar.openSidebar.click();
+    await sidebar.openSidebar.click();
 
-    // await sidebar.submittedIDV.click();
+    await sidebar.idvPortal.click();
 
-    // await page.pause();
+    await expect(sidebar.submittedIDV).toBeVisible();
+
+    await sidebar.submittedIDV.click();
 
 });
