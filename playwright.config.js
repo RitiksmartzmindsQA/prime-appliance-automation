@@ -40,8 +40,8 @@ export default defineConfig({
 
     screenshot: "only-on-failure",
 
-    video: "retain-on-failure",
-
+    video: process.env.CI ? "off" : "retain-on-failure",
+    
     launchOptions: process.env.CI
       ? undefined
       : {
