@@ -41,8 +41,11 @@ jobs:
         run: google-chrome --version
 
       - name: Install Playwright System Dependencies
-        timeout-minutes: 10
         run: npx playwright install-deps chromium
+
+      - name: Install Playwright Browsers
+        timeout-minutes: 20
+        run: npx playwright install chromium ffmpeg
 
       - name: Create Gmail Auth Files
         env:
