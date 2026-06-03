@@ -21,6 +21,12 @@ export default defineConfig({
   use: {
     browserName: "chromium",
 
+    ...(process.env.CI
+      ? {
+          channel: "chrome",
+        }
+      : {}),
+
     viewport: process.env.CI
       ? {
           width: 1366,
