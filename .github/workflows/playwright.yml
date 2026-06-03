@@ -10,6 +10,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
 
     env:
       COMMON_EMAIL: ${{ secrets.COMMON_EMAIL }}
@@ -50,4 +51,6 @@ jobs:
           node -e "JSON.parse(require('fs').readFileSync('auth/credentials.json', 'utf8')); JSON.parse(require('fs').readFileSync('auth/token.json', 'utf8'))"
 
       - name: Run Playwright tests
+        env:
+          PLAYWRIGHT_HTML_OPEN: never
         run: npx playwright test

@@ -9,23 +9,38 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
+  timeout: 120000,
   workers: 1,
-  reporter: "html",
+  reporter: process.env.CI
+    ? [["line"], ["html", { open: "never" }]]
+    : "html",
+  expect: {
+    timeout: 10000,
+  },
 
   use: {
     browserName: "chromium",
 
-    viewport: null,
+    viewport: process.env.CI
+      ? {
+          width: 1366,
+          height: 768,
+        }
+      : null,
 
-    trace: "on",
+    trace: process.env.CI
+      ? "retain-on-failure"
+      : "on",
 
     screenshot: "only-on-failure",
 
     video: "retain-on-failure",
 
-    launchOptions: {
-      args: ["--start-maximized"],
-    },
+    launchOptions: process.env.CI
+      ? undefined
+      : {
+          args: ["--start-maximized"],
+        },
   },
 
   projects: [
@@ -43,19 +58,6 @@ export default defineConfig({
     },
 
     {
-      name: "compliance-auth-setup",
-      testMatch: "setup/auth.setup.js",
-      metadata: { portalName: "compliance" },
-    },
-
-    {
-      name: "compliance",
-      testMatch: "compliance/**/*.spec.js",
-      dependencies: ["compliance-auth-setup"],
-      use: { storageState: "auth/compliance-auth.json" },
-    },
-
-    {
       name: "ivd-auth-setup",
       testMatch: "setup/auth.setup.js",
       metadata: { portalName: "ivd" },
@@ -69,45 +71,6 @@ export default defineConfig({
     },
 
     {
-      name: "sa-auth-setup",
-      testMatch: "setup/auth.setup.js",
-      metadata: { portalName: "sa" },
-    },
-
-    {
-      name: "sa",
-      testMatch: "sa/**/*.spec.js",
-      dependencies: ["sa-auth-setup"],
-      use: { storageState: "auth/sa-auth.json" },
-    },
-
-    {
-      name: "sap-auth-setup",
-      testMatch: "setup/auth.setup.js",
-      metadata: { portalName: "sap" },
-    },
-
-    {
-      name: "sap",
-      testMatch: "sap/**/*.spec.js",
-      dependencies: ["sap-auth-setup"],
-      use: { storageState: "auth/sap-auth.json" },
-    },
-
-    {
-      name: "pricing-auth-setup",
-      testMatch: "setup/auth.setup.js",
-      metadata: { portalName: "pricing" },
-    },
-
-    {
-      name: "pricing",
-      testMatch: "pricing/**/*.spec.js",
-      dependencies: ["pricing-auth-setup"],
-      use: { storageState: "auth/pricing-auth.json" },
-    },
-
-    {
       name: "ptp-auth-setup",
       testMatch: "setup/auth.setup.js",
       metadata: { portalName: "ptp" },
@@ -118,32 +81,6 @@ export default defineConfig({
       testMatch: "ptp/**/*.spec.js",
       dependencies: ["ptp-auth-setup"],
       use: { storageState: "auth/ptp-auth.json" },
-    },
-
-    {
-      name: "b2b-auth-setup",
-      testMatch: "setup/auth.setup.js",
-      metadata: { portalName: "b2b" },
-    },
-
-    {
-      name: "b2b",
-      testMatch: "b2b/**/*.spec.js",
-      dependencies: ["b2b-auth-setup"],
-      use: { storageState: "auth/b2b-auth.json" },
-    },
-
-    {
-      name: "soi-auth-setup",
-      testMatch: "setup/auth.setup.js",
-      metadata: { portalName: "soi" },
-    },
-
-    {
-      name: "soi",
-      testMatch: "soi/**/*.spec.js",
-      dependencies: ["soi-auth-setup"],
-      use: { storageState: "auth/soi-auth.json" },
     },
 
     {
