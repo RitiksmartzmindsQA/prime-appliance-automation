@@ -1,21 +1,17 @@
 export class Sidebar {
+  constructor(page) {
+    this.page = page;
 
-    constructor(page) {
+    this.papLogs = page.locator('a[href*="pap-logs"]');
 
-        this.page = page;
+    this.manageUsers = page.locator('a[href="#submenu-users"]');
 
-        this.papLogs =page.locator('a[href*="pap-logs"]');
+    this.activeUsers = page.locator('a[href*="active-user"]');
 
-        this.manageUsers =page.locator('a[href="#submenu-users"]');
+    this.inactiveUsers = page.locator('a[href*="inactive-user"]');
 
-        this.activeUsers =page.locator('a[href*="active-user"]');
+    this.settings = page.locator('a[href="#submenu-settings"]');
 
-        this.inactiveUsers =page.locator('a[href*="inactive-user"]');
-
-        this.settings =page.locator('a[href="#submenu-settings"]');
-
-        this.googleCloudUrlPool =page.locator('a[href*="google-cloud-url-pool"]');
-
-    }
-
+    this.googleCloudUrlPool = page.locator('a[href*="google-cloud-url-pool"]');
+  }
 }

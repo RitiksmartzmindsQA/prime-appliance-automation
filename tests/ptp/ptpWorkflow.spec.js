@@ -10,13 +10,11 @@ test("Complete Workflow", async ({ page }) => {
 
   await page.goto(process.env.PTP_URL);
 
-
   await expect(sidebar.openSidebar).toBeVisible();
 
   await sidebar.openSidebar.click();
 
   await expect(sidebar.sidebar).toBeVisible();
-
 
   await sidebar.ptpPortal.click();
 

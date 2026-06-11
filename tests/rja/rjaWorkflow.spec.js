@@ -192,6 +192,4 @@ test("Complete work flow", async ({ page }) => {
 
   console.log("RJA 2 Approved successfully");
 
-  // await page.pause();
-  
 });

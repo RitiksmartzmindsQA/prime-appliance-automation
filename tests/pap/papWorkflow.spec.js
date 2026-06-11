@@ -62,8 +62,6 @@ test("Complete Wokflow", async ({ page }) => {
 
     await expect(page.locator("table tbody tr").first()).toContainText("M1B 5K7");
 
-    // await page.pause();
-
     }
 
 );

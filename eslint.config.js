@@ -1,25 +1,18 @@
-import js from "@eslint/js";
-import globals from "globals";
+import js from '@eslint/js';
+import globals from 'globals';
 
 export default [
   {
-    ignores: [
-      "node_modules/**",
-      "playwright-report/**",
-      "test-results/**",
-      "reports/**",
-      "screenshots/**",
-      "auth/**",
-    ],
+    ignores: ['node_modules/**', 'playwright-report/**', 'test-results/**', 'reports/**', 'screenshots/**', 'auth/**'],
   },
 
   js.configs.recommended,
 
   {
-    files: ["**/*.js"],
+    files: ['**/*.js'],
 
     languageOptions: {
-      sourceType: "module",
+      sourceType: 'module',
 
       globals: {
         ...globals.browser,
@@ -28,9 +21,9 @@ export default [
     },
 
     rules: {
-      "no-unused-vars": "warn",
+      'no-unused-vars': 'warn',
 
-      "no-console": "off",
+      'no-console': 'off',
     },
   },
 ];

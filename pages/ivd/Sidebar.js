@@ -1,35 +1,31 @@
 export class Sidebar {
+  constructor(page) {
+    this.page = page;
 
-    constructor(page) {
+    this.sidebar = page.locator('#sidebar');
 
-        this.page = page;
+    this.openSidebar = page.locator('.toggle-sidebar-btn');
 
-        this.sidebar =page.locator("#sidebar");
+    this.idvPortal = this.sidebar.getByRole('link', { name: 'IDV Portal' });
 
-        this.openSidebar =page.locator(".toggle-sidebar-btn");
-        
-        this.idvPortal =this.sidebar.getByRole("link", { name: "IDV Portal" });
+    this.newIDV = this.sidebar.getByRole('link', { name: 'New IDV' });
 
-        this.newIDV =this.sidebar.getByRole("link", { name: "New IDV" });
+    this.submittedIDV = this.sidebar.getByRole('link', { name: 'Submitted IDV' });
 
-        this.submittedIDV =this.sidebar.getByRole("link", { name: "Submitted IDV" });
+    this.completedIDV = this.sidebar.getByRole('link', { name: 'Completed IDV' });
 
-        this.completedIDV =this.sidebar.getByRole("link", { name: "Completed IDV" });
+    this.settings = this.sidebar.getByRole('link', { name: 'Settings' });
 
-        this.settings =this.sidebar.getByRole("link", { name: "Settings" });
+    this.youtubeLinks = this.sidebar.getByRole('link', { name: 'Youtube Links' });
 
-        this.youtubeLinks =this.sidebar.getByRole("link", { name: "Youtube Links" });
+    this.idvMails = this.sidebar.getByRole('link', { name: 'IDV Mails' });
 
-        this.idvMails =this.sidebar.getByRole("link", { name: "IDV Mails" });
+    this.manageUser = this.sidebar.getByRole('link', { name: 'Manage User' });
 
-        this.manageUser =this.sidebar.getByRole("link", { name: "Manage User" });
+    this.addUser = this.sidebar.getByRole('link', { name: 'Add User' });
 
-        this.addUser =this.sidebar.getByRole("link", { name: "Add User" });
+    this.listUser = this.sidebar.getByRole('link', { name: 'List User' });
 
-        this.listUser =this.sidebar.getByRole("link", { name: "List User" });
-
-        this.apiDocumentation =this.sidebar.getByRole("link", { name: "Api Documentation" });
-
-    }
-
+    this.apiDocumentation = this.sidebar.getByRole('link', { name: 'Api Documentation' });
+  }
 }

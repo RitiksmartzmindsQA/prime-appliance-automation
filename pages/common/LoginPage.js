@@ -2,32 +2,28 @@ export class LoginPage {
   constructor(page) {
     this.page = page;
 
-    this.emailInput = page
-      .locator(
-        'input[type=email], input[placeholder="Email"], input[placeholder="Email address"]'
-      )
-      .or(
-        page.getByRole("textbox", {
-          name: /email/i,
-        })
-      );
+    this.emailInput = page.locator('input[type=email], input[placeholder="Email"], input[placeholder="Email address"]').or(
+      page.getByRole('textbox', {
+        name: /email/i,
+      })
+    );
 
-    this.submitButton = page.locator("button[type=submit]");
+    this.submitButton = page.locator('button[type=submit]');
 
     this.sendOtpButton = page
-      .locator("#loginWithOtpBtn")
+      .locator('#loginWithOtpBtn')
       .or(
-        page.getByRole("button", {
+        page.getByRole('button', {
           name: /send otp|login with otp/i,
         })
       )
       .first();
 
-    this.verifyOtpButton = page.getByRole("button", {
+    this.verifyOtpButton = page.getByRole('button', {
       name: /verify otp/i,
     });
 
-    this.otpInput = page.locator("input[type=number]");
+    this.otpInput = page.locator('input[type=number]');
   }
 
   async enterEmail(email) {

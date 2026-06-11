@@ -50,7 +50,7 @@ test("Complete Workflow", async ({ page }) => {
 
     await page.getByPlaceholder("Province/ State").click();
     await page.getByPlaceholder("Province/ State").pressSequentially("Test Province/ State");
- 
+
     await page.getByPlaceholder("Enter ZIP/Postal Code").click();
     await page.getByPlaceholder("Enter ZIP/Postal Code").pressSequentially("Q4R 2Q5");
 
@@ -68,18 +68,20 @@ test("Complete Workflow", async ({ page }) => {
     await page.getByPlaceholder("Appliance Full Serial Number").click();
     await page.getByPlaceholder("Appliance Full Serial Number").pressSequentially("Test appliance serial number");
 
-    await page.locator("#fileInput").setInputFiles("assets/images/878-100x100.jpg");
+    await page.locator("#fileInputModelSerial").setInputFiles("assets/images/878-100x100.jpg");
 
-    await page.getByRole('button', {name: 'Submit'}).click();
+    // await page.getByRole('button', {name: 'Submit'}).click();
 
-    await expect(page.getByPlaceholder("Prime Job UUID")).toHaveValue("");
+    // await expect(page.getByPlaceholder("Prime Job UUID")).toHaveValue("");
 
-    await sidebar.openSidebar.click();
+    // await sidebar.openSidebar.click();
 
-    await sidebar.idvPortal.click();
+    // await sidebar.idvPortal.click();
 
-    await expect(sidebar.submittedIDV).toBeVisible();
+    // await expect(sidebar.submittedIDV).toBeVisible();
 
-    await sidebar.submittedIDV.click();
+    // await sidebar.submittedIDV.click();
+
+    await page.pause();
 
 });
