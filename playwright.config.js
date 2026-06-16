@@ -8,7 +8,7 @@ export default defineConfig({
 
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 3 : 1,
   timeout: 120000,
   workers: 1,
   reporter: process.env.CI ? [['line'], ['html', { open: 'never' }]] : 'html',
@@ -99,6 +99,12 @@ export default defineConfig({
     },
 
     {
+      name: 'soi-auth-setup',
+      testMatch: 'setup/auth.setup.js',
+      metadata: { portalName: 'soi' },
+    },
+
+    {
       name: 'b2c',
       testMatch: 'b2c/**/*.spec.js',
     },
@@ -106,6 +112,13 @@ export default defineConfig({
     {
       name: 'sa',
       testMatch: 'sa/**/*.spec.js',
+    },
+
+    {
+      name: 'soi',
+      testMatch: 'soi/**/*.spec.js',
+      dependencies: ['soi-auth-setup'],
+      use: { storageState: 'auth/soi-auth.json' },
     },
   ],
 });

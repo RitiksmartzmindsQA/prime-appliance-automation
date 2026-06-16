@@ -98,5 +98,6 @@
 
 //   console.log("B2C Form Submitted successfully");
 
-// });
-// run only once a month
+// }); 
+
+// once a month
