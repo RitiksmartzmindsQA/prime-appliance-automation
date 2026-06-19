@@ -1,219 +1,242 @@
-# Prime Appliance Automation Framework
+# Prime Appliance Automation
 
-## Overview
+Playwright automation for Prime Appliance portal workflows. The framework uses JavaScript ES modules, page objects, Gmail OTP login, and Playwright storage state files for reusable authenticated sessions.
 
-This project is a Playwright automation framework built using JavaScript for testing multiple Prime Holdings portals.
+## Tech Stack
 
-The framework supports:
-
-- Multi-portal automation
-- Gmail OTP login automation
-- Reusable authentication handling
-- CI execution with GitHub Actions
-- Playwright storage state authentication
-- Environment-based configuration
-- ESLint and Prettier integration
-
----
-
-# Tech Stack
-
-- Playwright
-- JavaScript (ES Modules)
 - Node.js
+- Playwright Test
+- JavaScript ES modules
 - Gmail API
-- GitHub Actions
+- dotenv
 - ESLint
 - Prettier
+- GitHub Actions
 
----
+## Project Structure
 
-# Project Structure
-
-```bash
+```text
 .
-├── configs/
-│   └── portalConfig.js
-│
-├── pages/
-│   ├── common/
-│   │   └── LoginPage.js
-│   └── rja/
-│       └── DashboardPage.js
-│
-├── tests/
-│   └── rja/
-│       └── login.spec.js
-│
-├── utils/
-│   ├── gmailHelper.js
-│   ├── otpHelper.js
-│   └── loginHelper.js
-│
-├── auth/
-├── .github/workflows/
-├── playwright.config.js
-├── global.setup.js
-├── eslint.config.js
-└── package.json
+|-- .github/workflows/playwright.yml
+|-- assets/images/
+|-- auth/
+|   `-- .gitkeep
+|-- configs/
+|   `-- portalConfig.js
+|-- pages/
+|   |-- common/LoginPage.js
+|   |-- b2b/Sidebar.js
+|   |-- b2c/Sidebar.js
+|   |-- ivd/Sidebar.js
+|   |-- pap/Sidebar.js
+|   |-- pricing/Sidebar.js
+|   |-- ptp/Sidebar.js
+|   |-- rja/Sidebar.js
+|   |-- sa/Sidebar.js
+|   `-- soi/Sidebar.js
+|-- test-data/
+|   `-- PtpData.js
+|-- tests/
+|   |-- setup/auth.setup.js
+|   |-- b2b/b2bWorkflow.spec.js
+|   |-- b2c/b2cWorkflow.spec.js
+|   |-- ivd/ivdWorkflow.spec.js
+|   |-- pap/papWorkflow.spec.js
+|   |-- pricing/pricingWorkflow.spec.js
+|   |-- ptp/ptpWorkflow.spec.js
+|   |-- rja/rjaWorkflow.spec.js
+|   |-- sa/saWorkflow.spec.js
+|   `-- soi/soiWorkflow.spec.js
+|-- utils/
+|   |-- gmailHelper.js
+|   |-- loginHelper.js
+|   `-- otpHelper.js
+|-- eslint.config.js
+|-- package.json
+`-- playwright.config.js
 ```
 
----
+## Configured Playwright Projects
 
-# Features
+The active projects are defined in `playwright.config.js`.
 
-## Multi Portal Support
+Authenticated projects:
 
-Currently configured portals:
+- `rja`
+- `ivd`
+- `ptp`
+- `b2b`
+- `pap`
+- `soi`
 
-- RJA Portal
-- Compliance Portal
-- IVD Portal
-- SA Portal
-- SAP Portal
-- Pricing Portal
-- PTP Portal
-- B2B Portal
-- B2C Portal
-- SOI Portal
-- PAP Portal
+Each authenticated project depends on its matching setup project, for example `b2b` depends on `b2b-auth-setup`. The setup project logs in through Gmail OTP and saves a storage state file under `auth/<portal>-auth.json`.
 
----
+Non-authenticated projects:
 
-# Authentication Flow
+- `b2c`
+- `sa`
 
-The framework uses:
+Portal config also contains entries for `compliance`, `sap`, and `pricing`. Add matching Playwright projects before expecting those portals to run through `npm run test:list`.
 
-- Gmail OTP verification
-- Automated OTP fetching using Gmail API
-- Playwright storage state authentication
+## Environment Setup
 
-Authentication state is stored in:
+Create a local `.env` file from `.env.example` and fill in the real portal values.
 
-```bash
-auth/<portal-name>-auth.json
+Required variables:
+
+```env
+COMMON_EMAIL=your_login_email
+
+RJA_URL=https://example.com
+COMPLIANCE_URL=https://example.com
+IVD_URL=https://example.com
+SA_URL=https://example.com
+SAP_URL=https://example.com
+PRICING_URL=https://example.com
+PTP_URL=https://example.com
+B2B_URL=https://example.com
+B2C_URL=https://example.com
+SOI_URL=https://example.com
+PAP_URL=https://example.com
 ```
 
-This avoids repeated login execution during tests.
+Sensitive local files are ignored by Git:
 
----
+- `.env`
+- `auth/credentials.json`
+- `auth/token.json`
+- `auth/*-auth.json`
+- Playwright reports and test results
 
-# Environment Variables
+## Gmail OTP Setup
 
-Environment variables are managed using `.env`.
+Local runs need Gmail API auth files:
 
-Example:
+- `auth/credentials.json`
+- `auth/token.json`
 
-```bash
-COMMON_EMAIL=your_email
+The login helper reads the portal email from `.env`, waits for the OTP input, fetches the newest unread OTP email from Gmail, enters the code, and saves Playwright storage state.
 
-RJA_URL=https://example.com/login
-COMPLIANCE_URL=https://example.com/login
-```
+By default, OTP lookup searches for subject `Your OTP Code`. B2B overrides this with `Prime Appliance Login OTP` in `configs/portalConfig.js`.
 
----
-
-# Installation
-
-Clone the repository:
-
-```bash
-git clone <repository-url>
-```
-
-Install dependencies:
+## Install
 
 ```bash
 npm install
+npx playwright install chromium
 ```
 
-Install Playwright browsers:
+If you are setting up a clean CI-like Linux machine, install browser system dependencies too:
 
 ```bash
-npx playwright install
+npx playwright install-deps chromium
 ```
 
----
+## Commands
 
-# Running Tests
-
-Run all tests:
+Run all configured tests:
 
 ```bash
-npx playwright test
+npm run test
 ```
 
-Run headed mode:
+List discovered tests without running them:
+
+```bash
+npm run test:list
+```
+
+Run lint:
+
+```bash
+npm run lint
+```
+
+Run one project:
+
+```bash
+npx playwright test --project=b2b
+```
+
+Run one spec:
+
+```bash
+npx playwright test tests/soi/soiWorkflow.spec.js
+```
+
+Run headed:
 
 ```bash
 npx playwright test --headed
 ```
 
-Run specific test:
+Debug a project:
 
 ```bash
-npx playwright test tests/rja/login.spec.js
+npx playwright test --project=soi --headed --debug
 ```
 
----
+Note: when a project has an auth dependency, Playwright runs the auth setup project first. For example, debugging `soi` will first run `soi-auth-setup`.
 
-# Linting
+## CI
 
-Run ESLint:
+GitHub Actions runs on pushes and pull requests to `main` and `master`.
+
+The workflow:
+
+1. Checks out the repo.
+2. Installs Node.js.
+3. Runs `npm ci`.
+4. Checks the installed Chrome version.
+5. Installs Playwright Chromium system dependencies.
+6. Creates Gmail auth files from GitHub secrets.
+7. Runs `npx playwright test`.
+
+Required GitHub secrets:
+
+- `COMMON_EMAIL`
+- `GOOGLE_CREDENTIALS`
+- `GOOGLE_TOKEN`
+- `RJA_URL`
+- `COMPLIANCE_URL`
+- `IVD_URL`
+- `SA_URL`
+- `SAP_URL`
+- `PRICING_URL`
+- `PTP_URL`
+- `B2B_URL`
+- `B2C_URL`
+- `SOI_URL`
+- `PAP_URL`
+
+The current workflow does not run `npm run lint`; run lint locally before pushing if lint quality is part of your release gate.
+
+## Troubleshooting
+
+If a test is not visible to Playwright, run:
 
 ```bash
-npx eslint .
+npm run test:list
 ```
 
-Format files using Prettier:
+This confirms whether Playwright can load the config and discover projects/specs.
 
-```bash
-npx prettier --write .
-```
+If OTP login fails:
 
----
+- Confirm `auth/credentials.json` and `auth/token.json` exist locally.
+- Confirm `COMMON_EMAIL` is correct.
+- Confirm the portal sends an unread OTP email.
+- Confirm the Gmail subject matches the portal config.
+- Refresh `auth/token.json` if Gmail reports an invalid token.
 
-# CI Integration
+If CI auth fails:
 
-GitHub Actions workflow is configured for:
+- Refresh the `GOOGLE_TOKEN` GitHub secret.
+- Confirm `GOOGLE_CREDENTIALS` is valid JSON.
+- Confirm all portal URL secrets are present.
 
-- dependency installation
-- Playwright browser setup
-- automated test execution
+## Notes
 
-Workflow file:
-
-```bash
-.github/workflows/playwright.yml
-```
-
----
-
-# Security
-
-Sensitive files are excluded using `.gitignore`.
-
-Ignored files include:
-
-- `.env`
-- Gmail credentials
-- auth tokens
-- Playwright auth states
-- reports and screenshots
-
----
-
-# Future Scope
-
-- Functional module automation
-- Smoke suite execution
-- Cross-browser coverage
-- Portal-wise test grouping
-- Reporting enhancements
-- Parallel execution optimization
-
----
-
-# Author
-
-Ritik QA
+- Tests interact with live portal workflows and may create or update records.
+- Some specs depend on current dates or existing live data, so they can fail when portal data changes.
+- Auth state files are generated runtime artifacts and should stay out of Git.
