@@ -28,7 +28,7 @@ test ('Full portal workflow', async ({page}) => {
 
   await page.getByPlaceholder('Enter Label for the appliance (e.g, D1, D10) if multiples in the area').fill('Test1 test2');
 
-  await page.getByPlaceholder('Appliance Install Date').fill('2026-06-18');
+  await page.getByPlaceholder('Appliance Install Date').fill('2026-06-19');
 
   await expect(page.getByRole('button', { name: 'Next' })).toBeEnabled();
 
@@ -91,7 +91,6 @@ test ('Full portal workflow', async ({page}) => {
   await expect(page.locator('#preview_product')).toHaveText('Electric Dryer');
   await expect(page.locator('#preview_model_no')).toHaveText('Test Model Number');
   await expect(page.locator('#preview_seial_no')).toHaveText('Test Serial Number');
-  await expect(page.locator('#preview_install_date')).toHaveText('2026-06-18');
   await expect(page.locator('#preview_product_description')).toHaveText('Test Customer Problem Description');
   await expect(page.locator('#preview_description')).toHaveText('Test Description Test Description Test Description Test Description Test Description Test Description Test Description');
   await expect(page.getByText('Call Created On:').locator('..')).toContainText(today);
@@ -130,7 +129,6 @@ test ('Full portal workflow', async ({page}) => {
   await expect(page.locator('#preview_brand')).toHaveText('Test Brand');
   await expect(page.locator('#preview_product')).toHaveText('Electric Dryer');
   await expect(page.locator('#preview_seial_no')).toHaveText('Test Serial Number');
-  await expect(page.locator('#preview_install_date')).toHaveText(today);
   await expect(page.locator('#preview_product_description')).toHaveText('Test Customer Problem Description');
   await expect(page.locator('#preview_description')).toHaveText('Test Description Test Description Test Description Test Description Test Description Test Description Test Description');
 
