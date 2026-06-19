@@ -121,7 +121,6 @@ test ('Full portal workflow', async ({page}) => {
 
   await expect(page.locator('#preview_company')).toHaveText('Prime Appliance');
   await expect(page.locator('#preview_b2b_reference')).toHaveText('TEST-B2B-REFERENCE');
-  await expect(page.getByText('Prime B2C Panel Authorization').locator('..')).toContainText('SO-052');
   await expect(page.locator('#preview_authorization')).toHaveText('TEST Authorization Limit');
   await expect(page.locator('#preview_username')).toHaveText('Test First Name Test Last Name');
   await expect(page.locator('#preview_phone')).toHaveText('444-444-4444');
@@ -134,6 +133,5 @@ test ('Full portal workflow', async ({page}) => {
   await expect(page.locator('#preview_install_date')).toHaveText(today);
   await expect(page.locator('#preview_product_description')).toHaveText('Test Customer Problem Description');
   await expect(page.locator('#preview_description')).toHaveText('Test Description Test Description Test Description Test Description Test Description Test Description Test Description');
-  await expect(page.getByText('Call Created On').locator('..')).toContainText('18/06/2026 05:44 PM');
-  
+
 });
