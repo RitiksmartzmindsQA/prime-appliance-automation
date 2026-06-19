@@ -66,6 +66,4 @@ test("Complete Workflow", async ({ page }) => {
 
   // await page.locator('input[wire\\:model$=".current_job_sub_stage"]').last().fill("New Inquiry");
 
-  // await page.pause();
-
 });

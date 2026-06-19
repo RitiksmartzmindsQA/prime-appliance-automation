@@ -17,11 +17,18 @@ export class LoginPage {
           name: /send otp|login with otp/i,
         })
       )
+      .filter({ visible: true })
       .first();
 
-    this.verifyOtpButton = page.getByRole('button', {
-      name: /verify otp/i,
-    });
+    this.verifyOtpButton = page
+      .locator('.submit-otp-button')
+      .or(
+        page.getByRole('button', {
+          name: /verify otp|submit/i,
+        })
+      )
+      .filter({ visible: true })
+      .first();
 
     this.otpInput = page.locator('input[type=number]');
   }

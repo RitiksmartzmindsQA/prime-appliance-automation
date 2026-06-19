@@ -59,7 +59,7 @@ export const portals = {
     name: 'b2b',
     url: process.env.B2B_URL,
     email: process.env.COMMON_EMAIL,
-    otpEmailSubject: 'Prime B2C-Portal Notification',
+    otpEmailSubject: 'Prime Appliance Login OTP',
     authenticatedSelector: '#sidebar',
   },
 

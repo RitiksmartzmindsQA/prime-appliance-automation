@@ -12,9 +12,7 @@ export default defineConfig({
   timeout: 120000,
   workers: 1,
   reporter: process.env.CI ? [['line'], ['html', { open: 'never' }]] : 'html',
-  expect: {
-    timeout: 10000,
-  },
+  expect: {timeout: 10000,},
 
   use: {
     browserName: 'chromium',
@@ -83,6 +81,19 @@ export default defineConfig({
       testMatch: 'ptp/**/*.spec.js',
       dependencies: ['ptp-auth-setup'],
       use: { storageState: 'auth/ptp-auth.json' },
+    },
+
+    {
+      name: 'b2b-auth-setup',
+      testMatch: 'setup/auth.setup.js',
+      metadata: { portalName: 'b2b' },
+    },
+
+    {
+      name: 'b2b',
+      testMatch: 'b2b/**/*.spec.js',
+      dependencies: ['b2b-auth-setup'],
+      use: { storageState: 'auth/b2b-auth.json' },
     },
 
     {

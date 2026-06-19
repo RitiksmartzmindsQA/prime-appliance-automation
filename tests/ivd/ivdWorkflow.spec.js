@@ -70,18 +70,16 @@ test("Complete Workflow", async ({ page }) => {
 
     await page.locator("#fileInputModelSerial").setInputFiles("assets/images/878-100x100.jpg");
 
-    // await page.getByRole('button', {name: 'Submit'}).click();
+    await page.getByRole('button', {name: 'Submit'}).click();
 
-    // await expect(page.getByPlaceholder("Prime Job UUID")).toHaveValue("");
+    await expect(page.getByPlaceholder("Prime Job UUID")).toHaveValue("");
 
-    // await sidebar.openSidebar.click();
+    await sidebar.openSidebar.click();
 
-    // await sidebar.idvPortal.click();
+    await sidebar.idvPortal.click();
 
-    // await expect(sidebar.submittedIDV).toBeVisible();
+    await expect(sidebar.submittedIDV).toBeVisible();
 
-    // await sidebar.submittedIDV.click();
-
-    await page.pause();
+    await sidebar.submittedIDV.click();
 
 });

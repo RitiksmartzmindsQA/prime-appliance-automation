@@ -29,6 +29,4 @@ test('Complete work flow', async ({ page }) => {
 
   await expect(page.getByText("Unfortunately, we don't cover this postal code")).toBeVisible();
 
-  await page.pause();
-
 });
