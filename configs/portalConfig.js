@@ -37,6 +37,7 @@ export const portals = {
   sap: {
     name: 'sap',
     url: process.env.SAP_URL,
+    loginUrl: loginUrlFor(process.env.SAP_URL),
     email: process.env.COMMON_EMAIL,
     authenticatedSelector: '#sidebar',
   },

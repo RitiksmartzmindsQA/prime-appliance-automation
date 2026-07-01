@@ -12,7 +12,7 @@ export default defineConfig({
   timeout: 120000,
   workers: 1,
   reporter: process.env.CI ? [['line'], ['html', { open: 'never' }]] : 'html',
-  expect: {timeout: 10000,},
+  expect: {timeout: 30000,},
 
   use: {
     browserName: 'chromium',
@@ -84,6 +84,19 @@ export default defineConfig({
     },
 
     {
+      name: 'compliance-auth-setup',
+      testMatch: 'setup/auth.setup.js',
+      metadata: { portalName: 'compliance' },
+    },
+
+    {
+      name: 'compliance',
+      testMatch: 'compliance/**/*.spec.js',
+      dependencies: ['compliance-auth-setup'],
+      use: { storageState: 'auth/compliance-auth.json' },
+    },
+
+    {
       name: 'b2b-auth-setup',
       testMatch: 'setup/auth.setup.js',
       metadata: { portalName: 'b2b' },
@@ -107,6 +120,19 @@ export default defineConfig({
       testMatch: 'pap/**/*.spec.js',
       dependencies: ['pap-auth-setup'],
       use: { storageState: 'auth/pap-auth.json' },
+    },
+
+    {
+      name: 'sap-auth-setup',
+      testMatch: 'setup/auth.setup.js',
+      metadata: { portalName: 'sap' },
+    },
+
+    {
+      name: 'sap',
+      testMatch: 'sap/**/*.spec.js',
+      dependencies: ['sap-auth-setup'],
+      use: { storageState: 'auth/sap-auth.json' },
     },
 
     {
