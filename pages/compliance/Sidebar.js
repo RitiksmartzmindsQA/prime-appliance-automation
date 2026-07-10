@@ -2,44 +2,46 @@ export class Sidebar {
   constructor(page) {
     this.page = page;
 
+    this.sidebar = page.locator('#sidebar');
+
     this.openSidebar = page.locator('.toggle-sidebar-btn');
 
-    this.verificationOverview = page.getByRole('link', { name: 'Verification Overview' });
+    this.verificationOverview = this.sidebar.locator('a[href$="/overview"], a[href$="/overview/view"]');
 
-    this.profiles = page.getByRole('link', { name: 'Profiles' });
+    this.profiles = this.sidebar.locator('a[href$="/profiles"]');
 
-    this.licenses = page.getByRole('link', { name: 'Licenses' });
+    this.licenses = this.sidebar.locator('a[href$="/license"], a[href$="/license/current/overview"]');
 
-    this.insurances = page.getByRole('link', { name: 'Insurances' });
+    this.insurances = this.sidebar.locator('a[href$="/insurance"], a[href$="/insurance/current/overview"]');
 
-    this.governmentDocs = page.getByRole('link', { name: 'Government Docs' });
+    this.governmentDocs = this.sidebar.locator('a[href$="/government"], a[href$="/government/current/overview"]');
 
-    this.paymentDocs = page.getByRole('link', { name: 'Payment Docs' });
+    this.paymentDocs = this.sidebar.locator('a[href$="/payment"], a[href$="/payment/current/overview"]');
 
-    this.agreementDocs = page.getByRole('link', { name: 'Agreement Docs' });
+    this.agreementDocs = this.sidebar.locator('a[href$="/agreement"], a[href$="/agreement/current/overview"]');
 
-    this.screenings = page.getByRole('link', { name: 'Screenings' });
+    this.screenings = this.sidebar.locator('a[href$="/screening"], a[href$="/screening/current/overview"]');
+    
+    this.credentials = this.sidebar.locator('a[href$="/credential"], a[href$="/credential/current/overview"]');
 
-    this.credentials = page.getByRole('link', { name: 'Credentials' });
+    this.users = this.sidebar.getByRole('link', {name: /Users/,});
 
-    this.users = page.getByRole('link', { name: 'Users' });
+    this.addUser = this.sidebar.locator('#users-nav').getByRole('link', { name: 'Add User' });
 
-    this.addUser = page.locator('#users-nav').getByRole('link', { name: 'Add User' });
+    this.activeUsers = this.sidebar.locator('#users-nav').getByRole('link', { name: 'Active Users' });
 
-    this.activeUsers = page.locator('#users-nav').getByRole('link', { name: 'Active Users' });
+    this.deactivatedUsers = this.sidebar.locator('#users-nav').getByRole('link', { name: 'Deactivated Users' });
 
-    this.deactivatedUsers = page.locator('#users-nav').getByRole('link', { name: 'Deactivated Users' });
+    this.settings = this.sidebar.getByRole('link', {name: /Settings/,});
 
-    this.settings = page.getByRole('link', { name: 'Settings' });
+    this.roles = this.sidebar.locator('#settings-nav').getByRole('link', { name: 'Roles' });
 
-    this.roles = page.locator('#settings-nav').getByRole('link', { name: 'Roles' });
+    this.serviceCapabilities = this.sidebar.locator('#settings-nav').getByRole('link', { name: 'Service Capabilities' });
 
-    this.serviceCapabilities = page.locator('#settings-nav').getByRole('link', { name: 'Service Capabilities' });
+    this.serviceAreaCodes = this.sidebar.locator('#settings-nav').getByRole('link', { name: 'Service Area Codes' });
 
-    this.serviceAreaCodes = page.locator('#settings-nav').getByRole('link', { name: 'Service Area Codes' });
+    this.expirations = this.sidebar.locator('#settings-nav').getByRole('link', { name: 'Expirations' });
 
-    this.expirations = page.locator('#settings-nav').getByRole('link', { name: 'Expirations' });
-
-    this.autoReminders = page.locator('#settings-nav').getByRole('link', { name: 'Auto Reminders' });
+    this.autoReminders = this.sidebar.locator('#settings-nav').getByRole('link', { name: 'Auto Reminders' });
   }
 }

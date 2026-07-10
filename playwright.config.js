@@ -51,6 +51,12 @@ export default defineConfig({
     },
 
     {
+      name: 'pricing-auth-setup',
+      testMatch: 'setup/auth.setup.js',
+      metadata: { portalName: 'pricing' },
+    },
+
+    {
       name: 'rja',
       testMatch: 'rja/**/*.spec.js',
       dependencies: ['rja-auth-setup'],
@@ -81,6 +87,13 @@ export default defineConfig({
       testMatch: 'ptp/**/*.spec.js',
       dependencies: ['ptp-auth-setup'],
       use: { storageState: 'auth/ptp-auth.json' },
+    },
+
+    {
+      name: 'pricing',
+      testMatch: 'pricing/**/*.spec.js',
+      dependencies: ['pricing-auth-setup'],
+      use: { storageState: 'auth/pricing-auth.json' },
     },
 
     {
