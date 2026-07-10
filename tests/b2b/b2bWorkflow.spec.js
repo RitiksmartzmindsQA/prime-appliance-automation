@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { Sidebar } from "../../pages/b2b/Sidebar";
-test ('Full portal workflow', async ({page}) => {
+test('Complete portal workflow', async ({page}) => {
   const sidebar = new Sidebar(page);
   const today = new Date().toLocaleDateString('en-GB');
 

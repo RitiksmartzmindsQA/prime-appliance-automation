@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { Sidebar } from '../../pages/sap/Sidebar';
 import {sapJobId} from '../../test-data/sapJobId'
 
-test('Sap portal workflow', async({page}) => {
+test('Complete portal workflow', async ({ page }) => {
   const sidebar = new Sidebar(page);
 
   await page.goto(process.env.SAP_URL);
@@ -53,5 +53,4 @@ test('Sap portal workflow', async({page}) => {
 
   await expect(page.locator('tbody tr').filter({ hasText: sapJobId.jobId }).first()).toContainText('laricegabba17@gmail.com');
 
-  await page.pause();
 });

@@ -4,8 +4,7 @@ import { Sidebar } from "../../pages/ptp/Sidebar.js";
 
 import { ptpData } from "../../test-data/PtpData.js";
 
-test("Complete Workflow", async ({ page }) => {
-
+test('Complete portal workflow', async ({ page }) => {
   const sidebar = new Sidebar(page);
 
   await page.goto(process.env.PTP_URL);
@@ -18,33 +17,27 @@ test("Complete Workflow", async ({ page }) => {
 
   await sidebar.ptpPortal.click();
 
-  await expect(page.getByRole("heading", { name: "Progress Tracker Portal" })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Progress Tracker Portal' })).toBeVisible();
 
-  await page.getByPlaceholder("Enter Job ID").fill(ptpData.jobId);
+  await page.getByPlaceholder('Enter Job ID').fill(ptpData.jobId);
 
-  await page.getByRole("button", { name: "Search Job" }).click();
+  await page.getByRole('button', { name: 'Search Job' }).click();
 
-  await expect(page.getByRole("heading", { name: "Current Job Status" })).toBeVisible();
-
-  console.log("Job searching is working");
+  await expect(page.getByRole('heading', { name: 'Current Job Status' })).toBeVisible();
 
   await sidebar.ptpLogs.click();
 
-  await expect(page.getByRole("heading", { name: "PTP Logs" })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'PTP Logs' })).toBeVisible();
 
-  await expect(page.locator("table tbody tr").first()).toContainText(ptpData.jobId);
+  await expect(page.locator('table tbody tr').first()).toContainText(ptpData.jobId);
 
-  await expect(page.locator("table tbody tr").first()).toContainText(new Date().toLocaleDateString("en-CA"));
-
-  console.log("PTP logs validation is working");
+  await expect(page.locator('table tbody tr').first()).toContainText(new Date().toLocaleDateString('en-CA'));
 
   await sidebar.settings.hover();
 
   await sidebar.progressBarSetting.click();
 
-  await expect(page.getByRole("heading", { name: "Progress Bar Setting" })).toBeVisible();
-
-  console.log("Progress Bar Settings page is working");
+  await expect(page.getByRole('heading', { name: 'Progress Bar Setting' })).toBeVisible();
 
   // await page.getByRole("button", {name: "Add Main Stage",}).click();
 
@@ -65,5 +58,4 @@ test("Complete Workflow", async ({ page }) => {
   // await page.locator('input[wire\\:model$=".group_id"]').last().fill("gts_12341");
 
   // await page.locator('input[wire\\:model$=".current_job_sub_stage"]').last().fill("New Inquiry");
-
 });

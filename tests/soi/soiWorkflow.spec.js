@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 import { Sidebar } from '../../pages/soi/Sidebar.js';
 
-test('Resolved SOI Flow', async ({ page }) => {
+test('Complete portal workflow', async ({ page }) => {
   const sidebar = new Sidebar(page);
 
   await page.goto(process.env.SOI_URL.replace('/login', ''));
@@ -90,7 +90,6 @@ test('Resolved SOI Flow', async ({ page }) => {
   await Promise.all([page.context().waitForEvent('page'), page.getByRole('button', { name: 'Rate us on Google' }).click()]);
 
   await expect(page.context().pages()[1]).toHaveURL(/google/i);
-
 });
 
   test('Not Resolved SOI Flow - Same issue', async ({ page }) => {

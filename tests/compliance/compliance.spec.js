@@ -11,10 +11,14 @@ async function waitForSuccessModalToClose(page) {
 
 test.setTimeout(600000);
 
-test('Complete workflow test', async ({ page, browser }) => {
+test('Complete portal workflow', async ({ page, browser }) => {
   const sidebar = new Sidebar(page);
 
-  const uniqueEmail = `test${Date.now()}@yopmail.com`;
+  const uniqueId = Date.now();
+  const firstName = 'Test';
+  const lastName = `user${uniqueId}`;
+  const userFullName = `${firstName} ${lastName}`;
+  const uniqueEmail = `test${uniqueId}@yopmail.com`;
 
   await page.goto(process.env.COMPLIANCE_URL);
 
@@ -24,9 +28,9 @@ test('Complete workflow test', async ({ page, browser }) => {
 
   await expect(page.getByRole('heading', { name: 'Add user' })).toBeVisible();
 
-  await page.locator('#first_name').fill('Test');
+  await page.locator('#first_name').fill(firstName);
 
-  await page.locator('#last_name').fill('user');
+  await page.locator('#last_name').fill(lastName);
 
   await page.locator('#user_type').selectOption('user');
 
@@ -36,7 +40,7 @@ test('Complete workflow test', async ({ page, browser }) => {
 
   await page.locator('#secondary_phone').fill('6666666666');
 
-  await page.locator('#last_name').fill('user');
+  await page.locator('#last_name').fill(lastName);
 
   await page.locator('#role').selectOption('Test Role');
 
@@ -56,9 +60,9 @@ test('Complete workflow test', async ({ page, browser }) => {
 
   await page.keyboard.press('Enter');
 
-  await expect(page.locator('tbody tr').filter({ hasText: 'Test user' })).toBeVisible();
+  await expect(page.locator('tbody tr').filter({ hasText: userFullName })).toBeVisible();
 
-  await page.locator('tbody tr').filter({ hasText: 'Test user' }).locator('a.w-100').click();
+  await page.locator('tbody tr').filter({ hasText: userFullName }).locator('a.w-100').click();
 
   await expect(page.getByText('Screening(s) Details')).toBeVisible({ timeout: 20000 });
 
@@ -82,9 +86,9 @@ test('Complete workflow test', async ({ page, browser }) => {
 
   await page.keyboard.press('Enter');
 
-  await expect(page.locator('tbody tr').filter({ hasText: 'Test user' })).toBeVisible();
+  await expect(page.locator('tbody tr').filter({ hasText: userFullName })).toBeVisible();
 
-  await page.locator('tbody tr').filter({ hasText: 'Test user' }).locator('a.w-100').click();
+  await page.locator('tbody tr').filter({ hasText: userFullName }).locator('a.w-100').click();
 
   await expect(page.locator('tbody tr')).toContainText('Test Credentials');
 
@@ -369,9 +373,9 @@ test('Complete workflow test', async ({ page, browser }) => {
 
   await page.keyboard.press('Enter');
 
-  await expect(page.locator('tbody tr').filter({ hasText: 'Test user' })).toBeVisible();
+  await expect(page.locator('tbody tr').filter({ hasText: userFullName })).toBeVisible();
 
-  await page.locator('tbody tr').filter({ hasText: 'Test user' }).locator('a.w-100').click();
+  await page.locator('tbody tr').filter({ hasText: userFullName }).locator('a.w-100').click();
 
   await expect(page.locator('a[wire\\:click*="submittedDocumentDetails"]').first()).toBeVisible({ timeout: 20000 });
 
@@ -404,9 +408,9 @@ test('Complete workflow test', async ({ page, browser }) => {
 
   await page.keyboard.press('Enter');
 
-  await expect(page.locator('tbody tr').filter({ hasText: 'Test user' })).toBeVisible();
+  await expect(page.locator('tbody tr').filter({ hasText: userFullName })).toBeVisible();
 
-  await page.locator('tbody tr').filter({ hasText: 'Test user' }).locator('a.w-100').click();
+  await page.locator('tbody tr').filter({ hasText: userFullName }).locator('a.w-100').click();
 
   await expect(page.locator('a[wire\\:click*="submittedDocumentDetails"]').first()).toBeVisible({ timeout: 20000 });
 
@@ -439,9 +443,9 @@ test('Complete workflow test', async ({ page, browser }) => {
 
   await page.keyboard.press('Enter');
 
-  await expect(page.locator('tbody tr').filter({ hasText: 'Test user' })).toBeVisible();
+  await expect(page.locator('tbody tr').filter({ hasText: userFullName })).toBeVisible();
 
-  await page.locator('tbody tr').filter({ hasText: 'Test user' }).locator('a.w-100').click();
+  await page.locator('tbody tr').filter({ hasText: userFullName }).locator('a.w-100').click();
 
   await expect(page.locator('a[wire\\:click*="submittedDocumentDetails"]').first()).toBeVisible({ timeout: 20000 });
 
@@ -474,9 +478,9 @@ test('Complete workflow test', async ({ page, browser }) => {
 
   await page.keyboard.press('Enter');
 
-  await expect(page.locator('tbody tr').filter({ hasText: 'Test user' })).toBeVisible();
+  await expect(page.locator('tbody tr').filter({ hasText: userFullName })).toBeVisible();
 
-  await page.locator('tbody tr').filter({ hasText: 'Test user' }).locator('a.w-100').click();
+  await page.locator('tbody tr').filter({ hasText: userFullName }).locator('a.w-100').click();
 
   await expect(page.locator('a[wire\\:click*="submittedDocumentDetails"]').first()).toBeVisible({ timeout: 20000 });
 
@@ -525,15 +529,22 @@ test('Complete workflow test', async ({ page, browser }) => {
   await sidebar.openSidebar.click();
   await sidebar.agreementDocs.click();
 
-  await page.locator('#searchInput').click();
+  const agreementSearchInput = page.locator('#searchInput');
 
-  await page.keyboard.type(uniqueEmail);
+  await agreementSearchInput.click();
+  await agreementSearchInput.fill('');
+  await agreementSearchInput.pressSequentially(uniqueEmail);
 
-  await page.keyboard.press('Enter');
+  const submittedAgreementRow = page
+    .locator('tbody tr')
+    .filter({ hasText: userFullName })
+    .filter({ hasText: 'Submitted' });
 
-  await expect(page.locator('tbody tr').filter({ hasText: 'Test user' })).toBeVisible();
+  await agreementSearchInput.press('Enter');
 
-  await page.locator('tbody tr').filter({ hasText: 'Test user' }).locator('a.w-100').click();
+  await expect(submittedAgreementRow).toBeVisible();
+
+  await submittedAgreementRow.locator('a.w-100').click();
 
   await expect(page.locator('a[wire\\:click*="submittedDocumentDetails"]').first()).toBeVisible({ timeout: 20000 });
 
@@ -566,9 +577,9 @@ test('Complete workflow test', async ({ page, browser }) => {
 
   await page.keyboard.press('Enter');
 
-  await expect(page.locator('tbody tr').filter({ hasText: 'Test user' })).toBeVisible();
+  await expect(page.locator('tbody tr').filter({ hasText: userFullName })).toBeVisible();
 
-  await page.locator('tbody tr').filter({ hasText: 'Test user' }).locator('a.w-100').click();
+  await page.locator('tbody tr').filter({ hasText: userFullName }).locator('a.w-100').click();
 
   await expect(page.locator('a[wire\\:click*="uploadDocumentDetails"]').first()).toBeVisible({ timeout: 20000 });
 
@@ -579,5 +590,4 @@ test('Complete workflow test', async ({ page, browser }) => {
   await page.locator('.modal.show').getByRole('button', { name: 'Set Date & Approve' }).click();
 
   await waitForSuccessModalToClose(page);
-
 });
